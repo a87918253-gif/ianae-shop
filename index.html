@@ -2,8 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<!-- 휴대폰에서도 PC와 똑같은 화면으로 보이게 합니다 (화면 너비를 1280px로 고정) -->
-<meta name="viewport" content="width=1280">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이안애</title>
 
 <style>
@@ -313,6 +312,46 @@
   footer strong {
     font-size: 19px;
   }
+
+  /* ===== 휴대폰 화면 (가로 700px 이하일 때만 적용) ===== */
+  @media (max-width: 700px) {
+    header h1 { font-size: 30px; }
+    header p  { font-size: 15px; }
+    nav a     { margin: 0 8px; font-size: 15px; line-height: 2; }
+
+    .banner h2 { font-size: 30px; }
+    .banner p  { font-size: 16px; }
+
+    .search input { font-size: 16px; padding: 12px 18px; }
+
+    .category button {
+      padding: 9px 15px;
+      font-size: 15px;
+      margin: 4px 3px;
+    }
+
+    /* 상품을 한 줄에 2개씩 줄바꿈 */
+    .products {
+      flex-wrap: wrap;
+      overflow-x: visible;
+      gap: 12px;
+      padding: 30px 12px;
+    }
+    .card {
+      flex: 1 1 44%;
+      min-width: 140px;
+      max-width: none;
+      padding: 14px;
+    }
+
+    .photo      { height: 120px; }
+    .card h3    { font-size: 16px; }
+    .old-price  { font-size: 16px; }
+    .price      { font-size: 23px; }
+    .card .heart { font-size: 26px; }
+
+    footer { font-size: 15px; }
+  }
 </style>
 </head>
 
@@ -325,7 +364,7 @@
     <p><span class="wish-count" id="wishCount">찜한 상품 0개</span></p>
   </header>
 
-  <!-- 메뉴 6개 -->
+  <!-- 메뉴 7개 -->
   <nav>
     <a href="#">전체상품</a>
     <a href="#">주거용 바닥재</a>
@@ -333,6 +372,7 @@
     <a href="#">시공 문의</a>
     <a href="blog.html">블로그</a>
     <a href="taxi.html">모든 택시</a>
+    <a href="join.html">회원가입</a>
   </nav>
 
   <!-- 큰 배너 -->

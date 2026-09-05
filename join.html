@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이안애 회원가입</title>
+
+<style>
+  /* ===== 전체 배경 (쇼핑몰과 같은 사진) ===== */
+  body {
+    margin: 0;
+    font-family: "맑은 고딕", sans-serif;
+    color: #3d4a35;
+
+    background-image: url("https://images.pexels.com/photos/36215272/pexels-photo-36215272.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #e8dcc8;
+  }
+
+  /* ===== 맨 위 (제목 + 메뉴) ===== */
+  header {
+    background-color: rgba(214,233,247,0.88);
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #3f7095;
+  }
+  header p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+  }
+
+  nav {
+    background-color: rgba(232,244,252,0.88);
+    text-align: center;
+    padding: 14px 0;
+  }
+  nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #3f7095;
+    font-size: 16px;
+  }
+  nav a:hover {
+    color: #7fb0d4;
+  }
+
+  /* ===== 가입 폼 ===== */
+  .join {
+    background-color: rgba(0,0,0,0.25);
+    padding: 50px 20px 60px 20px;
+  }
+  .join .box {
+    background-color: white;
+    max-width: 520px;
+    margin: 0 auto;
+    border-radius: 16px;
+    padding: 36px 34px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .join h2 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    text-align: center;
+    color: #2f4a5e;
+  }
+  .join .lead {
+    margin: 0 0 26px 0;
+    text-align: center;
+    font-size: 15px;
+    color: #7a7a7a;
+  }
+
+  /* 입력 한 줄 */
+  .row {
+    margin-bottom: 18px;
+  }
+  .row label {
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 7px;
+  }
+  .row label .must {
+    color: #e2574c;
+  }
+  .row input {
+    width: 100%;
+    padding: 13px 15px;
+    font-size: 16px;
+    border: 2px solid #dcdcdc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  .row input:focus {
+    outline: none;
+    border-color: #a8cd8c;
+  }
+  .row .help {
+    margin: 6px 0 0 0;
+    font-size: 13px;
+    color: #999;
+  }
+
+  /* 약관 동의 */
+  .agree {
+    background-color: #f7fbf3;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 24px 0 22px 0;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .agree label {
+    display: block;
+    cursor: pointer;
+  }
+  .agree input {
+    margin-right: 8px;
+    transform: scale(1.2);
+  }
+
+  /* 가입 버튼 */
+  .join button {
+    width: 100%;
+    background-color: #7fa863;
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 26px;
+    cursor: pointer;
+  }
+  .join button:hover {
+    background-color: #6b9152;
+  }
+
+  .join .note {
+    margin: 20px 0 0 0;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #b06a62;
+    text-align: center;
+  }
+
+  /* ===== 맨 아래 연락처 ===== */
+  footer {
+    background-color: rgba(0,0,0,0.45);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.9;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+  footer strong {
+    font-size: 19px;
+  }
+
+  /* ===== 휴대폰 화면 (가로 700px 이하일 때만 적용) ===== */
+  @media (max-width: 700px) {
+    header h1 { font-size: 30px; }
+    header p  { font-size: 15px; }
+    nav a     { margin: 0 8px; font-size: 15px; line-height: 2; }
+
+    .join { padding: 30px 12px 40px 12px; }
+    .join .box { padding: 26px 20px; }
+    .join h2 { font-size: 24px; }
+
+    footer { font-size: 15px; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- 맨 위: 쇼핑몰 이름 + 한 줄 소개 -->
+  <header>
+    <h1>이안애</h1>
+    <p>집 안에 편안함을 깔다 — 주거용 · 체육관용 바닥재 전문점</p>
+  </header>
+
+  <!-- 메뉴 -->
+  <nav>
+    <a href="index.html">전체상품</a>
+    <a href="index.html">주거용 바닥재</a>
+    <a href="index.html">체육관용 바닥재</a>
+    <a href="blog.html">블로그</a>
+    <a href="taxi.html">모든 택시</a>
+    <a href="join.html">회원가입</a>
+  </nav>
+
+  <!-- 가입 폼 -->
+  <div class="join">
+    <div class="box">
+      <h2>회원가입</h2>
+      <p class="lead">가입하시면 전 품목 10% 할인 쿠폰을 드립니다.</p>
+
+      <div class="row">
+        <label for="name">이름 <span class="must">*</span></label>
+        <input type="text" id="name" placeholder="홍길동">
+      </div>
+
+      <div class="row">
+        <label for="phone">휴대폰 번호 <span class="must">*</span></label>
+        <input type="tel" id="phone" placeholder="010-1234-5678">
+      </div>
+
+      <div class="row">
+        <label for="email">이메일 <span class="must">*</span></label>
+        <input type="email" id="email" placeholder="name@example.com">
+      </div>
+
+      <div class="row">
+        <label for="pw">비밀번호 <span class="must">*</span></label>
+        <input type="password" id="pw" placeholder="6자 이상">
+        <p class="help">영문과 숫자를 섞어 6자 이상 입력해 주세요.</p>
+      </div>
+
+      <div class="row">
+        <label for="pw2">비밀번호 확인 <span class="must">*</span></label>
+        <input type="password" id="pw2" placeholder="한 번 더 입력">
+      </div>
+
+      <div class="row">
+        <label for="addr">주소</label>
+        <input type="text" id="addr" placeholder="시공 상담 시 필요합니다 (선택)">
+      </div>
+
+      <div class="agree">
+        <label>
+          <input type="checkbox" id="agree1">이용약관에 동의합니다 <span class="must">(필수)</span>
+        </label>
+        <label>
+          <input type="checkbox" id="agree2">할인·행사 소식을 받아보겠습니다 (선택)
+        </label>
+      </div>
+
+      <button onclick="signUp()">가입하기</button>
+
+      <p class="note">
+        ※ 지금은 샘플 화면이라 입력한 내용이 저장되지 않습니다.<br>
+        실제로 회원 정보를 저장하려면 서버가 필요합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 맨 아래: 연락처 -->
+  <footer>
+    <p>
+      <strong>이안애</strong> &nbsp;|&nbsp; 대표: 변성천<br>
+      전화: 1588-0000 (평일 09:00 ~ 18:00)<br>
+      이메일: help@ianae.co.kr<br>
+      주소: 서울특별시 강남구 테헤란로 100
+    </p>
+    <p>&copy; 2026 이안애. All rights reserved.</p>
+  </footer>
+
+<script>
+  // 가입하기 버튼을 누르면 입력한 내용을 확인합니다
+  function signUp() {
+    var name  = document.getElementById("name").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var pw    = document.getElementById("pw").value;
+    var pw2   = document.getElementById("pw2").value;
+
+    // 빈 칸이 있는지 확인
+    if (name === "")  { alert("이름을 입력해 주세요."); return; }
+    if (phone === "") { alert("휴대폰 번호를 입력해 주세요."); return; }
+    if (email === "") { alert("이메일을 입력해 주세요."); return; }
+
+    // 이메일에 @ 가 있는지 확인
+    if (email.indexOf("@") === -1) {
+      alert("이메일 주소를 다시 확인해 주세요.");
+      return;
+    }
+
+    // 비밀번호 확인
+    if (pw.length < 6) {
+      alert("비밀번호는 6자 이상 입력해 주세요.");
+      return;
+    }
+    if (pw !== pw2) {
+      alert("비밀번호가 서로 다릅니다. 다시 확인해 주세요.");
+      return;
+    }
+
+    // 필수 약관 동의 확인
+    if (document.getElementById("agree1").checked === false) {
+      alert("이용약관에 동의해 주세요.");
+      return;
+    }
+
+    // 모두 통과하면 가입 완료 안내
+    alert(name + "님, 가입이 완료되었습니다!\n\n10% 할인 쿠폰이 발급되었습니다.\n\n※ 샘플 화면이라 실제로 저장되지는 않습니다.");
+  }
+</script>
+
+</body>
+</html>

@@ -2,8 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<!-- 휴대폰에서도 PC와 똑같은 화면으로 보이게 합니다 (화면 너비를 1280px로 고정) -->
-<meta name="viewport" content="width=1280">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이안애 모든 택시</title>
 
 <style>
@@ -225,6 +224,39 @@
   footer strong {
     font-size: 19px;
     color: #ffd633;
+  }
+
+  /* ===== 휴대폰 화면 (가로 700px 이하일 때만 적용) ===== */
+  @media (max-width: 700px) {
+    header h1 { font-size: 32px; }
+    header p  { font-size: 15px; }
+    nav a     { margin: 0 8px; font-size: 15px; line-height: 2; }
+
+    .banner h2      { font-size: 32px; }
+    .banner p       { font-size: 17px; }
+    .banner .callnum { font-size: 34px; }
+    .banner button  { font-size: 18px; padding: 15px 34px; }
+
+    .services { padding: 35px 12px; gap: 12px; }
+    .service {
+      width: auto;
+      flex: 1 1 44%;
+      padding: 18px 12px;
+    }
+    .service .icon { font-size: 42px; }
+    .service h3 { font-size: 17px; }
+    .service p  { font-size: 14px; }
+
+    .intro { padding: 0 12px 35px 12px; }
+    .intro .box { padding: 24px 18px; }
+    .intro h2 { font-size: 22px; }
+    .intro p  { font-size: 17px; }
+
+    .fare { padding: 15px 12px 40px 12px; }
+    .fare h2 { font-size: 26px; }
+    .fare th, .fare td { padding: 12px 12px; font-size: 15px; }
+
+    footer { font-size: 15px; }
   }
 </style>
 </head>
