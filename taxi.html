@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이안애 콜택시</title>
+
+<style>
+  /* ===== 전체 배경 (밤거리 택시 사진) ===== */
+  body {
+    margin: 0;
+    font-family: "맑은 고딕", sans-serif;
+    color: #2b2b2b;
+
+    /* 아래 url 부분만 바꾸면 다른 사진으로 교체됩니다 */
+    background-image: url("https://images.pexels.com/photos/29909003/pexels-photo-29909003.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #1c1c22;
+  }
+
+  /* ===== 맨 위 (상호 + 메뉴) ===== */
+  header {
+    background-color: rgba(0,0,0,0.55);
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 40px;
+    color: #ffd633;                 /* 택시 노란색 */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+  header p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    color: #f5f5f5;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  nav {
+    background-color: rgba(0,0,0,0.65);
+    text-align: center;
+    padding: 14px 0;
+  }
+  nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #ffd633;
+    font-size: 16px;
+  }
+  nav a:hover {
+    color: #ffffff;
+  }
+
+  /* ===== 큰 배너 (전체화면) ===== */
+  .banner {
+    background-color: rgba(0,0,0,0.45);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  .banner h2 {
+    font-size: 46px;
+    margin: 0 0 14px 0;
+    color: #ffd633;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+  }
+  .banner p {
+    font-size: 19px;
+    margin: 0 0 30px 0;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+  }
+  .banner .callnum {
+    font-size: 40px;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0 0 26px 0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+  }
+  .banner button {
+    background-color: #ffd633;
+    color: #000000;
+    font-weight: bold;
+    border: none;
+    padding: 16px 40px;
+    font-size: 19px;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+  .banner button:hover {
+    background-color: #ffe066;
+  }
+
+  /* ===== 서비스 안내 카드 ===== */
+  .services {
+    background-color: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 55px 20px;
+  }
+  .service {
+    background-color: white;
+    border-radius: 14px;
+    width: 250px;
+    padding: 26px 22px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .service .icon {
+    font-size: 52px;
+  }
+  .service h3 {
+    font-size: 19px;
+    margin: 12px 0 10px 0;
+    color: #1f3d5c;
+  }
+  .service p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ===== 요금 안내 ===== */
+  .fare {
+    background-color: rgba(0,0,0,0.65);
+    padding: 20px 20px 60px 20px;
+  }
+  .fare h2 {
+    text-align: center;
+    color: #ffd633;
+    font-size: 30px;
+    margin: 0 0 26px 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+  }
+  .fare table {
+    background-color: white;
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .fare th, .fare td {
+    padding: 15px 18px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    text-align: left;
+  }
+  .fare th {
+    background-color: #ffd633;
+    color: #000000;
+    font-weight: bold;
+  }
+  .fare td:last-child {
+    text-align: right;
+    font-weight: bold;
+    color: #1f3d5c;
+  }
+  .fare .note {
+    max-width: 620px;
+    margin: 16px auto 0 auto;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.8;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+  }
+
+  /* ===== 맨 아래 연락처 ===== */
+  footer {
+    background-color: rgba(0,0,0,0.75);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.9;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+  footer strong {
+    font-size: 19px;
+    color: #ffd633;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- 맨 위: 상호 + 한 줄 소개 -->
+  <header>
+    <h1>이안애 콜택시</h1>
+    <p>가까운 거리도 흔쾌히, 편안하게 모십니다</p>
+  </header>
+
+  <!-- 메뉴 -->
+  <nav>
+    <a href="taxi.html">택시 홈</a>
+    <a href="#service">서비스 안내</a>
+    <a href="#fare">요금 안내</a>
+    <a href="index.html">바닥재 쇼핑몰</a>
+  </nav>
+
+  <!-- 큰 배너 -->
+  <div class="banner">
+    <h2>부르시면 바로 갑니다</h2>
+    <p>새벽에도, 짐이 많아도, 짧은 거리도 괜찮습니다.</p>
+    <p class="callnum">1588-0000</p>
+    <button onclick="callTaxi()">택시 부르기</button>
+  </div>
+
+  <!-- 서비스 안내 -->
+  <div class="services" id="service">
+
+    <div class="service">
+      <div class="icon">📞</div>
+      <h3>예약 콜</h3>
+      <p>하루 전에 예약하시면<br>출발 10분 전에 미리<br>집 앞으로 찾아뵙습니다.</p>
+    </div>
+
+    <div class="service">
+      <div class="icon">✈️</div>
+      <h3>공항 · KTX</h3>
+      <p>캐리어가 많으셔도<br>짐칸을 비워두고<br>함께 들어드립니다.</p>
+    </div>
+
+    <div class="service">
+      <div class="icon">🌙</div>
+      <h3>심야 안심 귀가</h3>
+      <p>집 앞 현관까지 확인하고<br>출발합니다. 원하시면<br>보호자께 문자를 보냅니다.</p>
+    </div>
+
+    <div class="service">
+      <div class="icon">🏥</div>
+      <h3>병원 동행</h3>
+      <p>진료가 끝날 때까지<br>기다렸다가<br>모셔다 드립니다.</p>
+    </div>
+
+  </div>
+
+  <!-- 요금 안내 -->
+  <div class="fare" id="fare">
+    <h2>요금 안내</h2>
+
+    <table>
+      <tr>
+        <th>구분</th>
+        <th style="text-align:right;">요금</th>
+      </tr>
+      <tr>
+        <td>기본요금 (2km까지)</td>
+        <td>4,800원</td>
+      </tr>
+      <tr>
+        <td>거리요금 (131m당)</td>
+        <td>100원</td>
+      </tr>
+      <tr>
+        <td>심야 할증 (00시 ~ 04시)</td>
+        <td>20% 추가</td>
+      </tr>
+      <tr>
+        <td>공항 (예약 시 정액)</td>
+        <td>65,000원</td>
+      </tr>
+      <tr>
+        <td>단골 카드 10회 적립</td>
+        <td>1회 무료</td>
+      </tr>
+    </table>
+
+    <p class="note">
+      ※ 위 요금은 예시입니다. 실제 운행 요금으로 바꿔서 사용하세요.<br>
+      ※ 정기 출퇴근 고객은 월 단위 예약 시 할인해 드립니다.
+    </p>
+  </div>
+
+  <!-- 맨 아래: 연락처 -->
+  <footer>
+    <p>
+      <strong>이안애 콜택시</strong> &nbsp;|&nbsp; 대표: 변성천<br>
+      전화: 1588-0000 (연중무휴)<br>
+      운행시간: 평일 06:00 ~ 익일 02:00 / 주말 06:00 ~ 익일 03:00<br>
+      이메일: help@ianae.co.kr
+    </p>
+    <p>&copy; 2026 이안애 콜택시. All rights reserved.</p>
+  </footer>
+
+<script>
+  // 택시 부르기 버튼
+  function callTaxi() {
+    alert("이안애 콜택시 1588-0000 으로 전화 주세요!\n\n예약하실 때 아래를 알려주시면 빠릅니다.\n1. 타실 날짜와 시간\n2. 출발 장소 (동·호수까지)\n3. 도착 장소\n4. 짐 개수");
+  }
+</script>
+
+</body>
+</html>
