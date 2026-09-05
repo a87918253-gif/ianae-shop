@@ -186,6 +186,41 @@
     margin: 14px 0 6px 0;
   }
   /* BEST 표시 */
+  /* 하트 찜하기 버튼 (카드 오른쪽 위) */
+  .card .heart {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #d5d5d5;          /* 찜하기 전: 흐린 회색 */
+  }
+  .card .heart:hover {
+    background: none;
+    color: #f0a49c;
+  }
+  .card .heart.on {
+    color: #e2574c;          /* 찜한 뒤: 진한 빨강 */
+  }
+
+  /* 맨 위 찜한 개수 */
+  .wish-count {
+    display: inline-block;
+    margin-top: 12px;
+    background-color: #ffffff;
+    color: #e2574c;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 8px 20px;
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+
   .best {
     position: absolute;
     top: 14px;
@@ -253,6 +288,7 @@
   <header>
     <h1>이안애</h1>
     <p>집 안에 편안함을 깔다 — 주거용 · 체육관용 바닥재 전문점</p>
+    <p><span class="wish-count" id="wishCount">찜한 상품 0개</span></p>
   </header>
 
   <!-- 메뉴 6개 -->
@@ -286,6 +322,7 @@
   <div class="products">
 
     <div class="card" data-category="home">
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo wood"></div>
       <h3>EVA 고밀도 층간소음 매트</h3>
       <p class="old-price">100,000원</p>
@@ -294,6 +331,7 @@
     </div>
 
     <div class="card" data-category="home">
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo rubber"></div>
       <h3>TPE 홈짐 운동매트 15mm</h3>
       <p class="old-price">100,000원</p>
@@ -302,6 +340,7 @@
     </div>
 
     <div class="card" data-category="gym">
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo court"></div>
       <h3>체육관용 PVC 탄성 바닥재</h3>
       <p class="old-price">100,000원</p>
@@ -311,6 +350,7 @@
 
     <div class="card" data-category="home">
       <span class="best">BEST</span>
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo livingwood"></div>
       <h3>거실용 강마루 (오크)</h3>
       <p class="old-price">100,000원</p>
@@ -320,6 +360,7 @@
 
     <div class="card" data-category="home">
       <span class="best">BEST</span>
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo kids"></div>
       <h3>아이용 친환경 장판</h3>
       <p class="old-price">100,000원</p>
@@ -328,6 +369,7 @@
     </div>
 
     <div class="card" data-category="gym">
+      <button class="heart" onclick="wish(this)">♥</button>
       <div class="photo taekwondo"></div>
       <h3>태권도 퍼즐 매트 (홍청)</h3>
       <p class="old-price">100,000원</p>
@@ -405,6 +447,18 @@
   // 시공문의 버튼
   function askBuild() {
     alert("시공 문의는 1588-0000 으로 전화 주세요!");
+  }
+
+  // 하트를 누르면 찜하기, 다시 누르면 해제됩니다
+  function wish(btn) {
+    btn.classList.toggle("on");   // "on" 을 붙였다 뗐다 합니다
+    countWish();
+  }
+
+  // 찜한 개수를 맨 위에 표시합니다
+  function countWish() {
+    var n = document.querySelectorAll(".heart.on").length;
+    document.getElementById("wishCount").innerText = "찜한 상품 " + n + "개";
   }
 </script>
 
