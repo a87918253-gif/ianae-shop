@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이안애</title>
+
+<style>
+  /* ===== 기본 설정 ===== */
+  /* ===== 전체 배경: 바다가 보이는 거실 사진 (페이지 전체 한 장) ===== */
+  body {
+    margin: 0;
+    font-family: "맑은 고딕", sans-serif;
+    color: #3d4a35;
+
+    /* 아래 url 부분만 바꾸면 다른 사진으로 교체됩니다 */
+    background-image: url("https://images.pexels.com/photos/31817163/pexels-photo-31817163.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;          /* 화면에 꽉 채우기 */
+    background-position: center;
+    background-attachment: fixed;    /* 스크롤해도 사진은 고정 */
+    background-color: #c2dcf1;
+  }
+
+  /* ===== 맨 위 (제목 + 메뉴) ===== */
+  header {
+    background-color: rgba(214,233,247,0.88);  /* 은은한 연한 파란색 (반투명) */
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #3f7095;
+  }
+  header p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+  }
+
+  nav {
+    background-color: rgba(232,244,252,0.88);
+    text-align: center;
+    padding: 14px 0;
+  }
+  nav a {
+    margin: 0 18px;
+    text-decoration: none;
+    color: #3f7095;
+    font-size: 16px;
+  }
+  nav a:hover {
+    color: #7fb0d4;
+  }
+
+  /* ===== 큰 배너 (배경 사진 위에 글씨만) ===== */
+  .banner {
+    background-color: rgba(0,0,0,0.22);   /* 글씨가 잘 보이도록 살짝 어둡게 */
+    height: 100vh;                 /* 화면 높이만큼 = 전체화면 */
+    display: flex;                 /* 글자를 가운데로 모으기 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  .banner h2 {
+    font-size: 46px;
+    margin: 0 0 14px 0;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  }
+  .banner p {
+    font-size: 19px;
+    margin: 0 0 30px 0;
+    color: #f3f9fd;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+  .banner button {
+    background-color: #7fa863;
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    font-size: 17px;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+  .banner button:hover {
+    background-color: #6b9152;
+  }
+
+  /* ===== 상품 카드 ===== */
+  .products {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;      /* 줄바꿈 안 함 = 6개가 한 줄에 */
+    gap: 16px;
+    padding: 50px 20px;
+    overflow-x: auto;       /* 화면이 좁으면 옆으로 밀어서 보기 */
+  }
+  .card {
+    position: relative;   /* BEST 표시를 카드 안에 붙이기 위해 필요 */
+    background-color: white;
+    border: 1px solid #dff0d0;
+    border-radius: 14px;
+    flex: 1 1 0;          /* 화면 너비에 맞춰 6개가 똑같이 나눠 가짐 */
+    min-width: 180px;     /* 이보다 작아지지는 않음 */
+    max-width: 250px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.22);   /* 사진 위에 카드가 떠 보이게 */
+  }
+  /* ===== 상품 영역 (배경 사진이 그대로 비쳐 보임) ===== */
+  .shop-bg {
+    background-color: rgba(0,0,0,0.18);   /* 아주 옅은 막 */
+    padding-bottom: 40px;
+  }
+
+  /* ===== 카테고리 버튼 ===== */
+  .category {
+    text-align: center;
+    padding: 45px 20px 0 20px;
+  }
+  .category button {
+    background-color: #e74c3c;   /* 빨간색 바탕 */
+    color: #000000;              /* 검정색 글씨 */
+    font-weight: bold;
+    border: 2px solid #c0392b;
+    padding: 10px 24px;
+    margin: 0 5px;
+    font-size: 16px;
+    border-radius: 24px;
+    cursor: pointer;
+  }
+  .category button:hover {
+    background-color: #ff6b5b;   /* 마우스를 올리면 밝은 빨강 */
+  }
+  .category button.on {          /* 지금 선택된 버튼 */
+    background-color: #b32d1f;   /* 진한 빨강 */
+    color: #000000;
+    border-color: #8c2318;
+  }
+
+  /* ===== 상품 사진 (무료 사진: Pexels) ===== */
+  /* url("...") 안의 주소만 바꾸면 다른 사진으로 교체됩니다 */
+  .photo {
+    height: 170px;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    background-size: cover;       /* 카드에 꽉 채우기 */
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* 1. EVA 층간소음 매트 - 거실 마루 바닥 */
+  .wood {
+    background-image: url("https://images.pexels.com/photos/17181935/pexels-photo-17181935.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+
+  /* 2. TPE 홈짐 매트 - 운동매트 */
+  .rubber {
+    background-image: url("https://images.pexels.com/photos/6752163/pexels-photo-6752163.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+
+  /* 3. 체육관용 PVC 바닥재 - 실내 체육관 코트 */
+  .court {
+    background-image: url("https://images.pexels.com/photos/5407033/pexels-photo-5407033.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+
+  /* 4. 거실용 강마루 - 헤링본 마루 시공 */
+  .livingwood {
+    background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+
+  /* 5. 아이용 장판 - 아이들이 노는 바닥 */
+  .kids {
+    background-image: url("https://images.pexels.com/photos/4544598/pexels-photo-4544598.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+
+  /* 6. 태권도 퍼즐 매트 - 도장 매트 */
+  .taekwondo {
+    background-image: url("https://images.pexels.com/photos/7045594/pexels-photo-7045594.jpeg?auto=compress&cs=tinysrgb&w=900");
+  }
+  .card h3 {
+    font-size: 18px;
+    margin: 14px 0 6px 0;
+  }
+  /* BEST 표시 */
+  .best {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background-color: #e2574c;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 14px;
+  }
+  /* 할인 전 가격 (취소선) */
+  .old-price {
+    color: #8a8a8a;
+    text-decoration: line-through;
+    font-size: 19px;
+    font-weight: bold;
+  }
+  /* 할인율 (빨간색) */
+  .sale {
+    color: #e2574c;
+    font-weight: 900;
+  }
+  /* 판매 가격 */
+  .price {
+    color: #4a7a2f;
+    font-size: 27px;
+    font-weight: 900;
+    margin: 4px 0 16px 0;
+  }
+  .card button {
+    background-color: #a8cd8c;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    font-size: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .card button:hover {
+    background-color: #7fa863;
+  }
+
+  /* ===== 맨 아래 연락처 ===== */
+  /* ===== 맨 아래 연락처 (배경 사진이 그대로 이어짐) ===== */
+  footer {
+    background-color: rgba(0,0,0,0.45);   /* 글씨가 잘 보이도록 어둡게 */
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 16px;
+    font-weight: bold;                    /* 안내 글씨 진하게 */
+    line-height: 1.9;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+  footer strong {
+    font-size: 19px;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- 맨 위: 쇼핑몰 이름 + 한 줄 소개 -->
+  <header>
+    <h1>이안애</h1>
+    <p>집 안에 편안함을 깔다 — 주거용 · 체육관용 바닥재 전문점</p>
+  </header>
+
+  <!-- 메뉴 4개 -->
+  <nav>
+    <a href="#">전체상품</a>
+    <a href="#">주거용 바닥재</a>
+    <a href="#">체육관용 바닥재</a>
+    <a href="#">시공 문의</a>
+  </nav>
+
+  <!-- 큰 배너 -->
+  <div class="banner">
+    <h2>층간소음 걱정 없는 하루</h2>
+    <p>아이도 어른도 마음 놓고 걷는 바닥, 이안애가 만들어 드립니다.</p>
+    <button onclick="showEvent()">신규회원 10% 할인받기</button>
+  </div>
+
+  <div class="shop-bg">
+
+  <!-- 카테고리 버튼 -->
+  <div class="category">
+    <button class="on" onclick="showCategory('all', this)">전체상품</button>
+    <button onclick="showCategory('home', this)">주거용 바닥재</button>
+    <button onclick="showCategory('gym', this)">체육관 바닥재</button>
+    <button onclick="askBuild()">시공문의</button>
+  </div>
+
+  <!-- 상품 카드 6개 -->
+  <div class="products">
+
+    <div class="card" data-category="home">
+      <div class="photo wood"></div>
+      <h3>EVA 고밀도 층간소음 매트</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('EVA 고밀도 층간소음 매트')">장바구니 담기</button>
+    </div>
+
+    <div class="card" data-category="home">
+      <div class="photo rubber"></div>
+      <h3>TPE 홈짐 운동매트 15mm</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('TPE 홈짐 운동매트 15mm')">장바구니 담기</button>
+    </div>
+
+    <div class="card" data-category="gym">
+      <div class="photo court"></div>
+      <h3>체육관용 PVC 탄성 바닥재</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('체육관용 PVC 탄성 바닥재')">장바구니 담기</button>
+    </div>
+
+    <div class="card" data-category="home">
+      <span class="best">BEST</span>
+      <div class="photo livingwood"></div>
+      <h3>거실용 강마루 (오크)</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('거실용 강마루 (오크)')">장바구니 담기</button>
+    </div>
+
+    <div class="card" data-category="home">
+      <span class="best">BEST</span>
+      <div class="photo kids"></div>
+      <h3>아이용 친환경 장판</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('아이용 친환경 장판')">장바구니 담기</button>
+    </div>
+
+    <div class="card" data-category="gym">
+      <div class="photo taekwondo"></div>
+      <h3>태권도 퍼즐 매트 (홍청)</h3>
+      <p class="old-price">100,000원</p>
+      <p class="price">80,000원</p>
+      <button onclick="addCart('태권도 퍼즐 매트 (홍청)')">장바구니 담기</button>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- 맨 아래: 연락처 -->
+  <footer>
+    <p>
+      <strong>이안애</strong> &nbsp;|&nbsp; 대표: 변성천<br>
+      전화: 1588-0000 (평일 09:00 ~ 18:00)<br>
+      이메일: help@ianae.co.kr<br>
+      주소: 서울특별시 강남구 테헤란로 100
+    </p>
+    <p>&copy; 2026 이안애. All rights reserved.</p>
+  </footer>
+
+<script>
+  // 배너 버튼을 누르면 알림창이 뜹니다
+  function showEvent() {
+    alert("신규회원 10% 할인 쿠폰이 발급되었습니다!");
+  }
+
+  // 상품 버튼을 누르면 알림창이 뜹니다
+  function addCart(name) {
+    alert(name + " 상품을 장바구니에 담았습니다!");
+  }
+
+  // 할인율을 자동으로 계산해서 가격 앞에 빨간색으로 붙입니다
+  function showDiscount() {
+    var cards = document.querySelectorAll(".card");
+
+    for (var i = 0; i < cards.length; i++) {
+      var oldBox = cards[i].querySelector(".old-price");
+      var newBox = cards[i].querySelector(".price");
+
+      // 글자에서 숫자만 뽑아냅니다 ("100,000원" -> 100000)
+      var oldPrice = Number(oldBox.innerText.replace(/[^0-9]/g, ""));
+      var newPrice = Number(newBox.innerText.replace(/[^0-9]/g, ""));
+
+      // 할인율 = (할인전 - 판매가) / 할인전 x 100
+      var rate = Math.round((oldPrice - newPrice) / oldPrice * 100);
+
+      newBox.innerHTML = '<span class="sale">' + rate + '%</span> ' + newBox.innerText;
+    }
+  }
+
+  // 페이지가 열리면 바로 실행합니다
+  showDiscount();
+
+  // 카테고리 버튼을 누르면 그 종류의 상품만 보여줍니다
+  function showCategory(type, btn) {
+    var cards = document.querySelectorAll(".card");
+
+    for (var i = 0; i < cards.length; i++) {
+      if (type === "all" || cards[i].dataset.category === type) {
+        cards[i].style.display = "block";   // 보이기
+      } else {
+        cards[i].style.display = "none";    // 숨기기
+      }
+    }
+
+    // 눌린 버튼만 초록색으로 칠하기
+    var btns = document.querySelectorAll(".category button");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].classList.remove("on");
+    }
+    btn.classList.add("on");
+  }
+
+  // 시공문의 버튼
+  function askBuild() {
+    alert("시공 문의는 1588-0000 으로 전화 주세요!");
+  }
+</script>
+
+</body>
+</html>
