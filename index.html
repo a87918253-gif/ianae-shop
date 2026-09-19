@@ -582,6 +582,133 @@
   }
   .cart-head .x:hover { color: #fff; }
 
+  /* =======================================================
+     오른쪽 아래 떠 있는 장바구니 버튼
+     (전화 상담 버튼 바로 위에 붙습니다)
+     ======================================================= */
+  .float-cart {
+    position: fixed;
+    right: 22px;
+    bottom: 86px;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--sans);
+    border: none;
+    padding: 15px 24px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-l);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .float-cart:hover { transform: translateY(-3px); background: var(--olive); }
+  .float-cart .bag { font-size: 18px; }
+
+  /* 개수 표시 (담긴 게 있을 때만 보입니다) */
+  .float-cart .num {
+    background: var(--sale);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 800;
+    min-width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 20px;
+    padding: 0 6px;
+    text-align: center;
+  }
+  .float-cart .num.hide { display: none; }
+
+  /* 모달 안 날짜 카테고리 (담은 날짜별로 골라 봅니다) */
+  .cart-cats {
+    padding: 15px 26px 16px 26px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* 무엇을 고르는 줄인지 알려주는 작은 문구 */
+  .cart-cats .cats-label {
+    margin: 0 0 10px 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+
+  /* 버튼이 옆으로 늘어서는 줄 (많으면 옆으로 밀어서 봅니다) */
+  .cart-cats .cats-row {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+
+  .cart-cats button {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    padding: 8px 14px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cart-cats button:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* 지금 보고 있는 버튼 */
+  .cart-cats button.on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* 버튼 안 개수 표시 */
+  .cart-cats button .cnt {
+    margin-left: 6px;
+    background: var(--cream-2);
+    color: var(--ink-soft);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 20px;
+  }
+  .cart-cats button.on .cnt {
+    background: rgba(255,255,255,0.22);
+    color: #fff;
+  }
+  /* 담긴 게 없으면 카테고리 줄을 숨깁니다 */
+  .cart-cats.hide { display: none; }
+
+  /* 날짜 구분줄 */
+  .cart-day {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0 4px 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+  .cart-day::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
   /* 담긴 상품 줄들 */
   .cart-list {
     flex: 1;
@@ -726,8 +853,22 @@
     .worry .item  { padding: 30px 22px; }
     .review .item { padding: 26px 22px; }
 
+    /* 떠 있는 장바구니 버튼 (전화 버튼 위로) */
+    .float-cart {
+      right: 14px;
+      bottom: 70px;
+      padding: 13px 19px;
+      font-size: 14px;
+      gap: 7px;
+    }
+    .float-cart .bag { font-size: 16px; }
+    .float-cart .num { min-width: 20px; height: 20px; line-height: 20px; font-size: 11.5px; }
+
     /* 장바구니 모달 */
     .cart-panel { max-height: 86vh; }
+    .cart-cats  { padding: 13px 20px 14px 20px; }
+    .cart-cats .cats-label { font-size: 11px; margin-bottom: 8px; }
+    .cart-cats button { font-size: 12.5px; padding: 7px 12px; }
     .cart-head  { padding: 18px 20px; }
     .cart-head h3 { font-size: 18px; }
     .cart-list  { padding: 6px 20px; }
@@ -1132,6 +1273,12 @@
     <p class="copy">&copy; 2026 이안애(E-安愛). All rights reserved.</p>
   </footer>
 
+  <!-- 오른쪽 아래 떠 있는 장바구니 버튼 -->
+  <button class="float-cart" onclick="openCart()">
+    <span class="bag">🛒</span> 장바구니
+    <span class="num hide" id="floatNum">0</span>
+  </button>
+
   <!-- 오른쪽 아래 떠 있는 전화 버튼 -->
   <a href="tel:15880000" class="float-call"><span class="ring">☎</span> 바로 상담 1588-0000</a>
 
@@ -1143,6 +1290,9 @@
       <h3>장바구니</h3>
       <button class="x" onclick="closeCart()">&times;</button>
     </div>
+
+    <!-- 담은 날짜별 카테고리 버튼이 여기에 그려집니다 -->
+    <div class="cart-cats" id="cartCats"></div>
 
     <!-- 담긴 상품 줄이 여기에 그려집니다 -->
     <div class="cart-list" id="cartList"></div>
@@ -1258,10 +1408,77 @@
      5. 찜하기 / 장바구니
      ======================================================= */
   // 장바구니에 담긴 상품들이 여기에 쌓입니다
-  // 한 칸에 { 이름, 가격, 개수 } 가 들어갑니다
+  // 한 칸에 { 이름, 가격, 개수, 담은날짜 } 가 들어갑니다
   var cart = [];
 
-  // 하트를 직접 눌렀을 때 (찜하기)
+  // 지금 보고 있는 날짜 카테고리 ("all" 이면 전체)
+  var cartDay = "all";
+
+  // 브라우저에 저장할 때 쓰는 이름
+  var SAVE_KEY = "ianae_cart";
+
+  /* ----- 저장하기 / 불러오기 ----- */
+
+  // 담은 내용을 브라우저에 저장합니다 (새로고침해도 남아 있습니다)
+  function saveCart() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(cart));
+    } catch (e) {
+      // 저장이 막혀 있어도 화면은 그대로 동작합니다
+    }
+  }
+
+  // 저장해 둔 내용을 꺼내옵니다
+  function loadCart() {
+    try {
+      var saved = localStorage.getItem(SAVE_KEY);
+      if (saved) cart = JSON.parse(saved);
+    } catch (e) {
+      cart = [];
+    }
+    if (!Array.isArray(cart)) cart = [];
+  }
+
+  /* ----- 날짜 다루기 ----- */
+
+  // 오늘 날짜를 "2026-09-19" 모양으로 만듭니다
+  function today() {
+    var d   = new Date();
+    var m   = ("0" + (d.getMonth() + 1)).slice(-2);
+    var day = ("0" + d.getDate()).slice(-2);
+    return d.getFullYear() + "-" + m + "-" + day;
+  }
+
+  // "2026-09-19" 를 "9월 19일 (오늘)" 처럼 읽기 좋게 바꿉니다
+  function dayLabel(ymd) {
+    var parts = ymd.split("-");
+    var text  = Number(parts[1]) + "월 " + Number(parts[2]) + "일";
+
+    if (ymd === today()) return text + " (오늘)";
+
+    // 어제인지 확인합니다
+    var y  = new Date();
+    y.setDate(y.getDate() - 1);
+    var ym = ("0" + (y.getMonth() + 1)).slice(-2);
+    var yd = ("0" + y.getDate()).slice(-2);
+    if (ymd === y.getFullYear() + "-" + ym + "-" + yd) return text + " (어제)";
+
+    return text;
+  }
+
+  // 장바구니에 들어 있는 날짜들을 최신순으로 뽑습니다
+  function cartDays() {
+    var days = [];
+    for (var i = 0; i < cart.length; i++) {
+      if (days.indexOf(cart[i].date) === -1) days.push(cart[i].date);
+    }
+    days.sort();      // 오래된 날짜부터 정렬한 다음
+    days.reverse();   // 뒤집어서 최신 날짜가 앞에 오게 합니다
+    return days;
+  }
+
+  /* ----- 하트 (찜하기) ----- */
+
   function wish(btn) {
     btn.classList.toggle("on");
     countWish();
@@ -1271,49 +1488,6 @@
   function countWish() {
     var n = document.querySelectorAll(".heart.on").length;
     document.getElementById("wishCount").innerHTML = "찜한 상품 <b>" + n + "</b>개";
-  }
-
-  /* ----- 담기 버튼을 눌렀을 때 ----- */
-  function addCart(btn) {
-    var card  = btn.closest(".card");
-    var name  = card.querySelector("h3").innerText;
-    var price = Number(card.dataset.price);
-
-    // 이미 담은 상품이면 개수만 1 올립니다
-    var found = null;
-    for (var i = 0; i < cart.length; i++) {
-      if (cart[i].name === name) { found = cart[i]; break; }
-    }
-
-    if (found) {
-      found.qty++;
-    } else {
-      cart.push({ name: name, price: price, qty: 1 });
-    }
-
-    // 담으면 그 상품의 하트가 빨간색이 됩니다
-    card.querySelector(".heart").classList.add("on");
-    countWish();
-
-    drawCart();
-    openCart();   // 담자마자 장바구니 목록을 열어서 보여줍니다
-  }
-
-  /* ----- 각 줄 오른쪽 '빼기' 버튼을 눌렀을 때 ----- */
-  // 개수를 1 줄이고, 0이 되면 그 줄을 없앱니다
-  function removeCart(name) {
-    for (var i = 0; i < cart.length; i++) {
-      if (cart[i].name !== name) continue;
-
-      cart[i].qty--;
-
-      if (cart[i].qty <= 0) {
-        cart.splice(i, 1);          // 줄 없애기
-        offHeart(name);             // 하트도 원래 색으로
-      }
-      break;
-    }
-    drawCart();
   }
 
   // 그 상품 카드의 하트를 흐린 색으로 되돌립니다
@@ -1328,47 +1502,193 @@
     countWish();
   }
 
-  /* ----- 장바구니 목록을 화면에 그립니다 ----- */
-  function drawCart() {
-    var list  = document.getElementById("cartList");
-    var total = 0;
-    var count = 0;
+  // 장바구니에 남아 있는 상품들의 하트를 다시 켭니다
+  // (새로고침해서 들어왔을 때 쓰입니다)
+  function onHearts() {
+    var cards = document.querySelectorAll(".card");
+    for (var i = 0; i < cards.length; i++) {
+      var name = cards[i].querySelector("h3").innerText;
+      for (var j = 0; j < cart.length; j++) {
+        if (cart[j].name === name) {
+          cards[i].querySelector(".heart").classList.add("on");
+          break;
+        }
+      }
+    }
+    countWish();
+  }
 
-    // 담긴 게 하나도 없을 때
+  /* ----- 담기 버튼을 눌렀을 때 ----- */
+
+  function addCart(btn) {
+    var card  = btn.closest(".card");
+    var name  = card.querySelector("h3").innerText;
+    var price = Number(card.dataset.price);
+    var date  = today();
+
+    // 오늘 이미 담은 상품이면 개수만 1 올립니다
+    var found = null;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name === name && cart[i].date === date) { found = cart[i]; break; }
+    }
+
+    if (found) {
+      found.qty++;
+    } else {
+      cart.push({ name: name, price: price, qty: 1, date: date });
+    }
+
+    // 담으면 그 상품의 하트가 빨간색이 됩니다
+    card.querySelector(".heart").classList.add("on");
+    countWish();
+
+    cartDay = "all";   // 담으면 전체 보기로 돌려놓습니다
+    saveCart();
+    drawCart();
+    openCart();        // 담자마자 장바구니를 열어서 보여줍니다
+  }
+
+  /* ----- 각 줄 오른쪽 '빼기' 버튼을 눌렀을 때 ----- */
+
+  // 개수를 1 줄이고, 0이 되면 그 줄을 없앱니다
+  function removeCart(name, date) {
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name !== name || cart[i].date !== date) continue;
+
+      cart[i].qty--;
+
+      if (cart[i].qty <= 0) {
+        cart.splice(i, 1);   // 줄 없애기
+
+        // 다른 날짜에도 같은 상품이 남아 있는지 확인합니다
+        var left = false;
+        for (var j = 0; j < cart.length; j++) {
+          if (cart[j].name === name) { left = true; break; }
+        }
+        if (!left) offHeart(name);   // 하나도 없으면 하트를 끕니다
+      }
+      break;
+    }
+
+    // 보고 있던 날짜가 텅 비었으면 전체 보기로 돌아갑니다
+    if (cartDay !== "all" && cartDays().indexOf(cartDay) === -1) cartDay = "all";
+
+    saveCart();
+    drawCart();
+  }
+
+  /* ----- 날짜 카테고리를 눌렀을 때 ----- */
+
+  function showDay(day) {
+    cartDay = day;
+    drawCart();
+  }
+
+  /* ----- 장바구니 목록을 화면에 그립니다 ----- */
+
+  function drawCart() {
+    var list = document.getElementById("cartList");
+    var cats = document.getElementById("cartCats");
+    var days = cartDays();
+
+    /* --- 위쪽: 날짜 카테고리 버튼 --- */
     if (cart.length === 0) {
+      cats.className = "cart-cats hide";
+      cats.innerHTML = "";
+    } else {
+      cats.className = "cart-cats";
+
+      // 전체 개수를 먼저 셉니다
+      var allQty = 0;
+      for (var q = 0; q < cart.length; q++) allQty += cart[q].qty;
+
+      var cHtml = '<p class="cats-label">담은 날짜별로 보기</p>'
+                + '<div class="cats-row">'
+                + '<button class="' + (cartDay === "all" ? "on" : "") + '"'
+                + ' onclick="showDay(\'all\')">전체'
+                + '<span class="cnt">' + allQty + '</span></button>';
+
+      for (var d = 0; d < days.length; d++) {
+        // 그날 담은 개수를 셉니다
+        var dayQty = 0;
+        for (var p = 0; p < cart.length; p++) {
+          if (cart[p].date === days[d]) dayQty += cart[p].qty;
+        }
+
+        cHtml += '<button class="' + (cartDay === days[d] ? "on" : "") + '"'
+               + ' onclick="showDay(\'' + days[d] + '\')">' + dayLabel(days[d])
+               + '<span class="cnt">' + dayQty + '</span></button>';
+      }
+
+      cats.innerHTML = cHtml + '</div>';
+    }
+
+    /* --- 아래쪽: 상품 줄 --- */
+    // 지금 보기로 고른 날짜만 남깁니다
+    var show = [];
+    for (var i = 0; i < cart.length; i++) {
+      if (cartDay === "all" || cart[i].date === cartDay) show.push(cart[i]);
+    }
+
+    if (show.length === 0) {
       list.innerHTML =
         '<div class="cart-empty">' +
           '<div class="ico">🛒</div>' +
           '담긴 상품이 없습니다' +
         '</div>';
     } else {
-      var html = "";
+      // 최신 날짜가 위로 오게 정렬합니다
+      show.sort(function (a, b) {
+        return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0);
+      });
 
-      for (var i = 0; i < cart.length; i++) {
-        var it  = cart[i];
-        var sum = it.price * it.qty;
+      var html    = "";
+      var lastDay = "";
 
-        total += sum;
-        count += it.qty;
+      for (var k = 0; k < show.length; k++) {
+        var it = show[k];
+
+        // 날짜가 바뀌면 구분줄을 하나 넣습니다
+        if (it.date !== lastDay) {
+          html += '<div class="cart-day">' + dayLabel(it.date) + '</div>';
+          lastDay = it.date;
+        }
 
         html +=
           '<div class="cart-row">' +
             '<div class="info">' +
               '<p class="name">' + it.name + '</p>' +
               '<p class="calc">' + won(it.price) + ' × ' + it.qty + '개</p>' +
-              '<p class="sum">' + won(sum) + '</p>' +
+              '<p class="sum">' + won(it.price * it.qty) + '</p>' +
             '</div>' +
-            '<button class="minus" onclick="removeCart(\'' + it.name.replace(/'/g, "\\'") + '\')">빼기</button>' +
+            '<button class="minus" onclick="removeCart(\'' + esc(it.name) + '\', \'' + it.date + '\')">빼기</button>' +
           '</div>';
       }
-
       list.innerHTML = html;
     }
 
-    // 맨 위 개수, 합계, 주문 버튼 상태를 맞춥니다
-    document.getElementById("cartCount").innerHTML = "🛒 장바구니 <b>" + count + "</b>개 &nbsp;›";
+    /* --- 개수와 합계 --- */
+    // 합계는 지금 보고 있는 날짜 기준입니다
+    var total = 0;
+    for (var s = 0; s < show.length; s++) total += show[s].price * show[s].qty;
+
+    // 맨 위 표시는 날짜와 상관없이 전체 개수를 보여줍니다
+    var all = 0;
+    for (var a = 0; a < cart.length; a++) all += cart[a].qty;
+
+    document.getElementById("cartCount").innerHTML = "🛒 장바구니 <b>" + all + "</b>개 &nbsp;›";
     document.getElementById("cartTotal").innerText = won(total);
-    document.getElementById("cartOrder").disabled  = (cart.length === 0);
+    document.getElementById("cartOrder").disabled  = (show.length === 0);
+
+    // 오른쪽 아래 떠 있는 버튼의 개수도 같이 맞춥니다
+    var numBox = document.getElementById("floatNum");
+    numBox.innerText = all;
+    numBox.className = (all === 0) ? "num hide" : "num";
+  }
+
+  // 상품 이름에 따옴표가 있어도 깨지지 않게 합니다
+  function esc(s) {
+    return s.replace(/'/g, "\\'");
   }
 
   // 숫자를 "26,900원" 모양으로 바꿉니다
@@ -1376,7 +1696,8 @@
     return n.toLocaleString("ko-KR") + "원";
   }
 
-  /* ----- 목록 창 열기 / 닫기 ----- */
+  /* ----- 모달 열기 / 닫기 ----- */
+
   function openCart() {
     document.getElementById("cartPanel").classList.add("open");
     document.getElementById("cartBack").classList.add("open");
@@ -1392,23 +1713,29 @@
     if (e.key === "Escape") closeCart();
   });
 
-  // 주문하기 버튼
-  function order() {
-    if (cart.length === 0) return;
+  /* ----- 주문하기 버튼 ----- */
 
+  function order() {
     var count = 0;
     var total = 0;
+
     for (var i = 0; i < cart.length; i++) {
+      if (cartDay !== "all" && cart[i].date !== cartDay) continue;
       count += cart[i].qty;
       total += cart[i].price * cart[i].qty;
     }
+    if (count === 0) return;
 
-    alert("총 " + count + "개 / " + won(total) + "\n\n"
+    var where = (cartDay === "all") ? "전체" : dayLabel(cartDay);
+
+    alert(where + " / 총 " + count + "개 / " + won(total) + "\n\n"
         + "주문을 받았습니다.\n신규회원은 결제 시 10% 더 할인됩니다.\n\n"
         + "※ 샘플 화면이라 실제로 주문되지는 않습니다.");
   }
 
-  // 페이지가 열리면 빈 장바구니를 한 번 그려둡니다
+  // 페이지가 열리면 저장해 둔 장바구니를 불러와서 그립니다
+  loadCart();
+  onHearts();
   drawCart();
 
   /* =======================================================
