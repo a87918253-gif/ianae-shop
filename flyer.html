@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이안애(E-安愛) 전단지 — A4</title>
+
+<!-- 글꼴 불러오기 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+  /* =======================================================
+     이안애(E-安愛) A4 전단지
+     - 종이 크기: 210mm x 297mm (A4 세로)
+     - 인쇄: 화면 오른쪽 위 [인쇄하기] 버튼 또는 Ctrl+P
+     - PDF 로 저장: 인쇄 창에서 '대상'을 'PDF로 저장' 선택
+     ======================================================= */
+
+  :root {
+    --ink:        #22261f;   /* 가장 진한 먹색 */
+    --ink-soft:   #5a6155;   /* 본문 글씨색 */
+    --cream:      #faf7f1;   /* 밝은 아이보리 */
+    --cream-2:    #f3ece1;
+    --line:       #e7ded0;
+    --gold:       #b08d57;   /* 포인트 금색 */
+    --gold-soft:  #d9c39b;
+    --olive:      #5c6b4c;
+    --sale:       #c0392b;
+
+    --serif: "Noto Serif KR", "나눔명조", serif;
+    --sans:  "Pretendard", "Noto Sans KR", "맑은 고딕", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #6b6b66;          /* 화면에서 종이가 도드라져 보이도록 */
+    font-family: var(--sans);
+    color: var(--ink-soft);
+    padding: 30px 20px 60px 20px;
+  }
+
+  /* ===== 종이 한 장 (A4) ===== */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    background: var(--cream);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* 인쇄할 때 배경색과 사진이 빠지지 않게 합니다 */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== 1. 맨 위 상호 띠 ===== */
+  .top {
+    background: var(--ink);
+    color: #fff;
+    padding: 9mm 14mm 8mm 14mm;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .top .name {
+    font-family: var(--serif);
+    font-size: 30pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .top .name span { font-size: 0.6em; color: var(--gold-soft); }
+  .top .tag {
+    margin: 3mm 0 0 0;
+    font-size: 9.5pt;
+    letter-spacing: 0.22em;
+    color: var(--gold-soft);
+  }
+  .top .right {
+    text-align: right;
+    font-size: 9pt;
+    line-height: 1.8;
+    color: #b6b2a7;
+    letter-spacing: 0.02em;
+  }
+  .top .right b { color: #fff; font-weight: 600; display: block; font-size: 10pt; }
+
+  /* ===== 2. 큰 사진 ===== */
+  .hero {
+    position: relative;
+    height: 62mm;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .hero .pic {
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/36215272/pexels-photo-36215272.jpeg?auto=compress&cs=tinysrgb&w=1600");
+    background-size: cover;
+    background-position: center;
+  }
+  .hero .veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+                rgba(20,24,18,0.30) 0%,
+                rgba(20,24,18,0.52) 100%);
+  }
+  .hero .txt {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 14mm;
+    color: #fff;
+  }
+  .hero .kicker {
+    font-size: 8pt;
+    letter-spacing: 0.3em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin: 0 0 4mm 0;
+  }
+  .hero h2 {
+    font-family: var(--serif);
+    font-size: 25pt;
+    font-weight: 700;
+    line-height: 1.38;
+    margin: 0 0 4mm 0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .hero p {
+    font-size: 10.5pt;
+    line-height: 1.75;
+    margin: 0;
+    color: #efeadf;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  /* ===== 3. 약속 4가지 ===== */
+  .promise {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 7mm 14mm;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4mm;
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .promise .it { padding: 0 2mm; }
+  .promise .it + .it { border-left: 1px solid var(--line); }
+  .promise .ico { font-size: 15pt; margin-bottom: 2mm; }
+  .promise .t {
+    font-family: var(--serif);
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1.5mm;
+  }
+  .promise .d { font-size: 8pt; color: #8b9184; line-height: 1.55; }
+
+  /* ===== 4. 상품 ===== */
+  .goods { padding: 8mm 14mm 6mm 14mm; }
+
+  .sec-t {
+    text-align: center;
+    margin-bottom: 6mm;
+  }
+  .sec-t .k {
+    font-size: 7.5pt;
+    letter-spacing: 0.26em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 2mm 0;
+  }
+  .sec-t h3 {
+    font-family: var(--serif);
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .sec-t .line {
+    width: 12mm; height: 1px;
+    background: var(--gold);
+    border: 0;
+    margin: 3mm auto 0 auto;
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .card .pic {
+    height: 27mm;
+    background-size: cover;
+    background-position: center;
+  }
+  .p1 { background-image: url("https://images.pexels.com/photos/17181935/pexels-photo-17181935.jpeg?auto=compress&cs=tinysrgb&w=800"); }
+  .p2 { background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=800"); }
+  .p3 { background-image: url("https://images.pexels.com/photos/4544598/pexels-photo-4544598.jpeg?auto=compress&cs=tinysrgb&w=800"); }
+
+  .card .in { padding: 4mm 4mm 5mm 4mm; }
+  .card .cat {
+    font-size: 7pt;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 1.5mm 0;
+  }
+  .card h4 {
+    font-family: var(--serif);
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 2mm 0;
+    line-height: 1.45;
+  }
+  .card .say {
+    font-size: 8pt;
+    color: #8b9184;
+    line-height: 1.6;
+    margin: 0 0 3mm 0;
+    min-height: 10mm;
+  }
+  .card .was {
+    font-size: 8.5pt;
+    color: #a8a89e;
+    text-decoration: line-through;
+    margin: 0;
+  }
+  .card .now {
+    font-family: var(--serif);
+    font-size: 15pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0.5mm 0 0 0;
+  }
+  .card .now .off { color: var(--sale); font-family: var(--sans); font-size: 10pt; font-weight: 800; margin-right: 1.5mm; }
+  .card .now .per { font-family: var(--sans); font-size: 8pt; color: #9a9a90; font-weight: 400; }
+
+  /* ===== 5. 시공에 포함되는 것 ===== */
+  .include {
+    margin: 0 14mm 7mm 14mm;
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    padding: 5mm 6mm;
+    display: flex;
+    align-items: center;
+    gap: 6mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .include .lb {
+    font-family: var(--serif);
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    line-height: 1.45;
+  }
+  .include .lb small { display: block; font-family: var(--sans); font-size: 7.5pt; color: var(--gold); letter-spacing: 0.14em; font-weight: 700; }
+  .include ul {
+    margin: 0; padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 5mm;
+    flex: 1;
+    font-size: 9pt;
+    color: var(--ink-soft);
+  }
+  .include li::before { content: "✓ "; color: var(--olive); font-weight: 800; }
+  .include .free {
+    font-family: var(--serif);
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--olive);
+    white-space: nowrap;
+  }
+
+  /* ===== 6. 맨 아래 상담 전화 ===== */
+  .cta {
+    margin-top: auto;
+    background: var(--ink);
+    color: #fff;
+    padding: 8mm 14mm 7mm 14mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cta .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+  }
+  .cta .call .k {
+    font-size: 8pt;
+    letter-spacing: 0.28em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin: 0 0 1.5mm 0;
+  }
+  .cta .call .num {
+    font-family: var(--serif);
+    font-size: 34pt;
+    font-weight: 700;
+    color: var(--gold-soft);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 0;
+  }
+  .cta .call .hrs {
+    font-size: 8.5pt;
+    color: #b6b2a7;
+    margin: 2.5mm 0 0 0;
+    letter-spacing: 0.02em;
+  }
+  .cta .coupon {
+    text-align: center;
+    border: 1px dashed var(--gold-soft);
+    padding: 4mm 6mm;
+  }
+  .cta .coupon .t {
+    font-size: 8pt;
+    letter-spacing: 0.2em;
+    color: var(--gold-soft);
+    margin: 0 0 1.5mm 0;
+  }
+  .cta .coupon .v {
+    font-family: var(--serif);
+    font-size: 17pt;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .cta .coupon .s { font-size: 7.5pt; color: #b6b2a7; margin: 1.5mm 0 0 0; }
+
+  .cta .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 5mm;
+    font-size: 8.5pt;
+    color: #a9a69e;
+    line-height: 1.8;
+  }
+  .cta .foot b { color: #fff; font-weight: 600; }
+  .cta .foot .web {
+    text-align: right;
+    font-size: 8pt;
+  }
+  .cta .foot .web .site {
+    font-family: var(--serif);
+    font-size: 10pt;
+    color: var(--gold-soft);
+    display: block;
+    margin-bottom: 1mm;
+  }
+
+  /* ===== 화면에서만 보이는 인쇄 버튼 ===== */
+  .bar {
+    max-width: 210mm;
+    margin: 0 auto 14px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #e6e3dc;
+    font-size: 13px;
+  }
+  .bar button {
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .bar button:hover { background: #9a7a46; }
+
+  /* =======================================================
+     인쇄할 때 (Ctrl+P)
+     ======================================================= */
+  @page { size: A4 portrait; margin: 0; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; margin: 0; }
+    .bar  { display: none; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- 화면에서만 보입니다 (인쇄하면 안 나옵니다) -->
+  <div class="bar">
+    <span>A4 (210 × 297mm) · 인쇄하거나 PDF로 저장하세요</span>
+    <button onclick="window.print()">인쇄하기 / PDF 저장</button>
+  </div>
+
+  <!-- ===================== 종이 한 장 ===================== -->
+  <div class="page">
+
+    <!-- 1. 맨 위 상호 -->
+    <div class="top">
+      <div>
+        <p class="name">이안애 <span>E-安愛</span></p>
+        <p class="tag">집 안에 편안함을 깔다</p>
+      </div>
+      <div class="right">
+        <b>주거용 · 체육관용 바닥재 전문</b>
+        서울특별시 강남구 테헤란로 100<br>
+        대표 변성천
+      </div>
+    </div>
+
+    <!-- 2. 큰 사진 -->
+    <div class="hero">
+      <div class="pic"></div>
+      <div class="veil"></div>
+      <div class="txt">
+        <p class="kicker">PREMIUM FLOORING</p>
+        <h2>층간소음 걱정 없는 하루,<br>발끝에서 시작됩니다</h2>
+        <p>아이가 뛰어도 마음이 편한 바닥. 실측부터 시공, 뒷정리까지 이안애가 다 해드립니다.</p>
+      </div>
+    </div>
+
+    <!-- 3. 약속 4가지 -->
+    <div class="promise">
+      <div class="it">
+        <div class="ico">📏</div>
+        <div class="t">무료 방문 실측</div>
+        <div class="d">전화 한 통이면 찾아뵙고<br>견적서까지 무료로</div>
+      </div>
+      <div class="it">
+        <div class="ico">🛋️</div>
+        <div class="t">가구 이동 무료</div>
+        <div class="d">무거운 장롱·소파<br>옮기고 되돌려 놓습니다</div>
+      </div>
+      <div class="it">
+        <div class="ico">🍃</div>
+        <div class="t">친환경 자재</div>
+        <div class="d">아이가 뒹굴어도 안심<br>저방출 등급 자재</div>
+      </div>
+      <div class="it">
+        <div class="ico">🧹</div>
+        <div class="t">뒷정리까지</div>
+        <div class="d">폐자재 전부 가져가고<br>청소까지 마치고</div>
+      </div>
+    </div>
+
+    <!-- 4. 상품 -->
+    <div class="goods">
+      <div class="sec-t">
+        <p class="k">BEST COLLECTION</p>
+        <h3>가장 많이 찾으시는 바닥재</h3>
+        <hr class="line">
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="pic p1"></div>
+          <div class="in">
+            <p class="cat">층간소음</p>
+            <h4>EVA 고밀도<br>층간소음 매트 10mm</h4>
+            <p class="say">아이 발소리가 아랫집까지 가지 않게. 물걸레로 쓱 닦입니다.</p>
+            <p class="was">39,000원</p>
+            <p class="now"><span class="off">31%</span>26,900원 <span class="per">/ ㎡</span></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="pic p2"></div>
+          <div class="in">
+            <p class="cat">거실 마루</p>
+            <h4>오크 헤링본<br>강마루 7.5mm</h4>
+            <p class="say">거실이 두 배로 넓어 보입니다. 긁힘에 강해 오래 씁니다.</p>
+            <p class="was">89,000원</p>
+            <p class="now"><span class="off">30%</span>62,300원 <span class="per">/ ㎡</span></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="pic p3"></div>
+          <div class="in">
+            <p class="cat">아이 방</p>
+            <h4>아이 안심<br>친환경 장판 6mm</h4>
+            <p class="say">푹신해서 넘어져도 덜 아픕니다. 크레파스 자국도 잘 지워집니다.</p>
+            <p class="was">54,000원</p>
+            <p class="now"><span class="off">30%</span>37,800원 <span class="per">/ ㎡</span></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 5. 시공에 포함되는 것 -->
+    <div class="include">
+      <div class="lb">
+        시공에 포함
+        <small>ALL INCLUDED</small>
+      </div>
+      <ul>
+        <li>기존 바닥재 철거</li>
+        <li>가구 이동</li>
+        <li>폐자재 처리</li>
+      </ul>
+      <div class="free">추가 비용 0원</div>
+    </div>
+
+    <!-- 6. 맨 아래 상담 전화 -->
+    <div class="cta">
+      <div class="head">
+        <div class="call">
+          <p class="k">상담 · 무료 실측 신청</p>
+          <p class="num">1588-0000</p>
+          <p class="hrs">평일 09:00 ~ 18:00 · 재보고 견적서 드립니다. 보시고 안 하셔도 0원입니다.</p>
+        </div>
+        <div class="coupon">
+          <p class="t">신규회원</p>
+          <p class="v">전 품목<br>10% 할인</p>
+          <p class="s">첫 구매 1회</p>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div>
+          <b>이안애(E-安愛)</b><br>
+          서울특별시 강남구 테헤란로 100 &nbsp;|&nbsp; 대표 변성천<br>
+          help@ianae.co.kr
+        </div>
+        <div class="web">
+          <span class="site">a87918253-gif.github.io/ianae-shop</span>
+          상품 구경과 온라인 주문은 위 주소에서
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
