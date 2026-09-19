@@ -134,6 +134,9 @@ async function siteLogout() {
   if (db) await db.auth.signOut();
   drawAuth();                // 표시를 로그인 전으로 되돌립니다
 
+  // 장바구니가 있는 페이지라면 서버 장바구니를 화면에서 내립니다
+  if (typeof onSignOut === "function") onSignOut();
+
   // 로그인 페이지에 있었다면 그 화면도 함께 되돌립니다
   if (typeof logOut === "function" && document.getElementById("signed")) {
     document.getElementById("formArea").className = "form-area";

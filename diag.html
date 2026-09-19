@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연결 진단</title>
+<style>
+  body {
+    font-family: "Pretendard", "맑은 고딕", sans-serif;
+    background: #1c1f1a; color: #e6e3dc;
+    margin: 0; padding: 30px 20px; line-height: 1.8;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px 0; color: #fff; }
+  .sub { color: #9a978f; font-size: 14px; margin: 0 0 26px 0; }
+
+  .row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 16px; margin-bottom: 8px;
+    background: #24282160; border: 1px solid #3a3f36; border-radius: 3px;
+  }
+  .tag {
+    flex-shrink: 0; width: 58px; text-align: center;
+    font-size: 12px; font-weight: 800; padding: 3px 0; border-radius: 20px;
+  }
+  .ok   { background: #4d7c3a; color: #fff; }
+  .no   { background: #b1372a; color: #fff; }
+  .info { background: #4a4f44; color: #d6d2c8; }
+
+  .what { font-weight: 700; color: #fff; }
+  .detail { font-size: 13px; color: #a8a49b; word-break: break-all; }
+
+  pre {
+    background: #16191400; border: 1px solid #3a3f36;
+    padding: 14px; border-radius: 3px; overflow-x: auto;
+    font-size: 12.5px; color: #c6c2b8;
+  }
+  .fix {
+    margin-top: 26px; padding: 20px 22px;
+    background: #2b2f27; border-left: 3px solid #c8a96a; border-radius: 3px;
+  }
+  .fix h2 { font-size: 16px; margin: 0 0 10px 0; color: #e0c48c; }
+  .fix p { margin: 0 0 8px 0; font-size: 14.5px; }
+  a { color: #e0c48c; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>이안애 — 연결 진단</h1>
+  <p class="sub">장바구니가 서버에서 오는지 단계별로 확인합니다.</p>
+
+  <div id="out"></div>
+  <div id="fix"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+  var out = document.getElementById("out");
+
+  function line(state, what, detail) {
+    var t = state === "ok" ? "정상" : (state === "no" ? "문제" : "정보");
+    out.innerHTML +=
+      '<div class="row">' +
+        '<span class="tag ' + state + '">' + t + '</span>' +
+        '<div><span class="what">' + what + '</span>' +
+        (detail ? '<div class="detail">' + detail + '</div>' : "") +
+        '</div></div>';
+  }
+
+  async function run() {
+    /* 1. 어떤 방식으로 열었는지 */
+    var proto = location.protocol;
+    if (proto === "file:") {
+      line("no", "파일을 직접 열었습니다 (file://)",
+                 "이 방식에서는 로그인 정보가 페이지 사이에 공유되지 않을 수 있습니다.");
+    } else {
+      line("ok", "웹 주소로 열었습니다 (" + proto + ")", location.origin);
+    }
+
+    /* 2. 라이브러리 */
+    if (window.supabase && window.supabase.createClient) line("ok", "Supabase 라이브러리 불러옴");
+    else { line("no", "Supabase 라이브러리를 찾지 못함", "인터넷 연결이나 광고 차단 프로그램을 확인해 주세요."); return; }
+
+    /* 3. 연결 */
+    if (window.db) line("ok", "서버 연결 만들어짐");
+    else { line("no", "서버 연결이 만들어지지 않음"); return; }
+
+    /* 4. 브라우저 저장소 */
+    try {
+      localStorage.setItem("__t", "1"); localStorage.removeItem("__t");
+      line("ok", "브라우저 저장소 사용 가능");
+    } catch (e) {
+      line("no", "브라우저 저장소를 쓸 수 없음", "시크릿 모드이거나 저장이 막혀 있습니다.");
+    }
+
+    /* 5. 저장된 로그인 열쇠가 있는지 */
+    var keys = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k.indexOf("sb-") === 0 || k.indexOf("supabase") !== -1) keys.push(k);
+      }
+    } catch (e) {}
+
+    if (keys.length) line("ok", "저장된 로그인 정보 있음", keys.join(", "));
+    else            line("no", "저장된 로그인 정보 없음", "이 화면에서는 로그인한 적이 없는 것으로 보입니다.");
+
+    /* 6. 실제 로그인 상태 */
+    var user = null;
+    try {
+      const { data, error } = await db.auth.getSession();
+      if (error) line("no", "로그인 확인 중 오류", error.message);
+      else if (data && data.session) {
+        user = data.session.user;
+        line("ok", "로그인되어 있음", user.email + "  (id: " + user.id + ")");
+      } else {
+        line("no", "로그인되어 있지 않음", "아래 버튼으로 이 화면에서 직접 로그인해 보세요.");
+      }
+    } catch (e) {
+      line("no", "로그인 확인 실패", e.message);
+    }
+
+    /* 7. 상품 읽기 */
+    try {
+      const { data, error } = await db.from("products").select("name").limit(10);
+      if (error) line("no", "상품 읽기 실패", error.message);
+      else       line("ok", "상품 읽기 성공", data.length + "개");
+    } catch (e) { line("no", "상품 읽기 실패", e.message); }
+
+    /* 8. 장바구니 읽기 */
+    try {
+      const { data, error } = await db.from("cart_items")
+        .select("product_name, price, qty, added_date").order("added_date", { ascending: false });
+
+      if (error) {
+        line("no", "장바구니 읽기 실패", error.message);
+      } else if (!data.length) {
+        line(user ? "no" : "info", "장바구니가 비어 있음",
+             user ? "로그인은 됐는데 담긴 줄이 없습니다." : "로그인해야 서버 장바구니를 볼 수 있습니다.");
+      } else {
+        line("ok", "장바구니 " + data.length + "줄 읽음");
+        var t = "";
+        data.forEach(function (r) {
+          t += r.added_date + "   " + r.product_name + "   "
+             + Number(r.price).toLocaleString("ko-KR") + "원 x " + r.qty + "개\n";
+        });
+        out.innerHTML += "<pre>" + t + "</pre>";
+      }
+    } catch (e) { line("no", "장바구니 읽기 실패", e.message); }
+
+    /* 처방 */
+    var fix = document.getElementById("fix");
+    if (proto === "file:") {
+      fix.innerHTML =
+        '<div class="fix"><h2>이렇게 해보세요</h2>' +
+        '<p>파일을 직접 여는 방식(file://)은 로그인 정보가 페이지 사이에 공유되지 않을 수 있습니다.</p>' +
+        '<p>배포된 주소에서 같은 시험을 해보시면 정확합니다.</p>' +
+        '<p><a href="https://a87918253-gif.github.io/ianae-shop/diag.html">' +
+        'https://a87918253-gif.github.io/ianae-shop/diag.html</a> (배포 후 접속 가능)</p>' +
+        '</div>';
+    } else if (!user) {
+      fix.innerHTML =
+        '<div class="fix"><h2>이렇게 해보세요</h2>' +
+        '<p>먼저 <a href="login.html">로그인 페이지</a>에서 로그인하신 뒤 이 화면을 새로고침해 주세요.</p>' +
+        '</div>';
+    }
+  }
+
+  run();
+</script>
+</body>
+</html>

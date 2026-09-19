@@ -1492,10 +1492,29 @@
   // 브라우저에 저장할 때 쓰는 이름
   var SAVE_KEY = "ianae_cart";
 
-  /* ----- 저장하기 / 불러오기 ----- */
+  // 로그인한 회원 (로그인하지 않았으면 null)
+  var me = null;
 
-  // 담은 내용을 브라우저에 저장합니다 (새로고침해도 남아 있습니다)
-  function saveCart() {
+  /* =======================================================
+     저장하기 / 불러오기
+
+     로그인하셨으면  -> Supabase 에 저장 (다른 기기에서도 보입니다)
+     로그인 안 하셨으면 -> 이 브라우저에만 저장 (예전과 같습니다)
+     ======================================================= */
+
+  /* ----- 지금 로그인한 사람이 누구인지 확인합니다 ----- */
+  async function whoAmI() {
+    if (!window.db) return null;
+    try {
+      const { data } = await db.auth.getSession();
+      return (data && data.session) ? data.session.user : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* ----- 이 브라우저에만 저장 ----- */
+  function saveLocal() {
     try {
       localStorage.setItem(SAVE_KEY, JSON.stringify(cart));
     } catch (e) {
@@ -1503,15 +1522,93 @@
     }
   }
 
-  // 저장해 둔 내용을 꺼내옵니다
-  function loadCart() {
+  function readLocal() {
     try {
       var saved = localStorage.getItem(SAVE_KEY);
-      if (saved) cart = JSON.parse(saved);
+      var arr = saved ? JSON.parse(saved) : [];
+      return Array.isArray(arr) ? arr : [];
     } catch (e) {
-      cart = [];
+      return [];
     }
-    if (!Array.isArray(cart)) cart = [];
+  }
+
+  function clearLocal() {
+    try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
+  }
+
+  /* ----- 담은 내용을 저장합니다 ----- */
+  async function saveCart() {
+    if (!me) { saveLocal(); return; }
+
+    // 서버에 있는 내 장바구니를 지우고 지금 것으로 다시 씁니다
+    // (개수가 적어서 이 방법이 가장 단순하고 확실합니다)
+    try {
+      await db.from("cart_items").delete().eq("user_id", me.id);
+
+      if (cart.length > 0) {
+        var rows = cart.map(function (it) {
+          return {
+            user_id:      me.id,
+            product_name: it.name,
+            price:        it.price,
+            qty:          it.qty,
+            added_date:   it.date
+          };
+        });
+        await db.from("cart_items").insert(rows);
+      }
+    } catch (e) {
+      console.log("[장바구니] 서버에 저장하지 못했습니다.", e.message);
+      saveLocal();          // 서버가 안 되면 브라우저에라도 남겨둡니다
+    }
+  }
+
+  /* ----- 저장해 둔 내용을 꺼내옵니다 ----- */
+  async function loadCart() {
+    if (!me) { cart = readLocal(); return; }
+
+    try {
+      const { data, error } = await db
+        .from("cart_items")
+        .select("product_name, price, qty, added_date")
+        .eq("user_id", me.id);
+
+      if (error) throw error;
+
+      cart = (data || []).map(function (r) {
+        return { name: r.product_name, price: r.price, qty: r.qty, date: r.added_date };
+      });
+
+      // 로그인 전에 담아두신 것이 있으면 서버로 함께 옮깁니다
+      await mergeLocal();
+
+    } catch (e) {
+      console.log("[장바구니] 서버에서 불러오지 못해 이 브라우저 것을 씁니다.");
+      cart = readLocal();
+    }
+  }
+
+  /* ----- 로그인 전에 담은 것을 서버로 옮깁니다 ----- */
+  async function mergeLocal() {
+    var local = readLocal();
+    if (local.length === 0) return;
+
+    for (var i = 0; i < local.length; i++) {
+      var L = local[i];
+
+      // 서버에 같은 상품·같은 날짜가 있으면 개수를 더합니다
+      var found = null;
+      for (var j = 0; j < cart.length; j++) {
+        if (cart[j].name === L.name && cart[j].date === L.date) { found = cart[j]; break; }
+      }
+
+      if (found) found.qty += L.qty;
+      else       cart.push(L);
+    }
+
+    clearLocal();        // 옮겼으니 브라우저 쪽은 비웁니다
+    await saveCart();
+    console.log("[장바구니] 로그인 전에 담아두신 상품을 서버로 옮겼습니다.");
   }
 
   /* ----- 날짜 다루기 ----- */
@@ -1808,10 +1905,34 @@
         + "※ 샘플 화면이라 실제로 주문되지는 않습니다.");
   }
 
-  // 페이지가 열리면 저장해 둔 장바구니를 불러와서 그립니다
-  loadCart();
-  onHearts();
-  drawCart();
+  /* ----- 페이지가 열리면 장바구니를 불러와서 그립니다 -----
+     로그인하셨으면 서버에서, 아니면 이 브라우저에서 가져옵니다. */
+  drawCart();          // 먼저 빈 장바구니를 그려 화면이 비지 않게 합니다
+
+  (async function startCart() {
+    me = await whoAmI();
+    await loadCart();
+    onHearts();
+    drawCart();
+
+    if (me) console.log("[장바구니] " + me.email + " 님의 장바구니를 서버에서 불러왔습니다.");
+    else    console.log("[장바구니] 로그인하지 않으셔서 이 브라우저에만 저장됩니다.");
+  })();
+
+  /* ----- 로그아웃하면 서버 장바구니를 화면에서 내립니다 -----
+     (supabase.js 의 로그아웃이 이 함수를 불러줍니다) */
+  async function onSignOut() {
+    me = null;
+    cart = readLocal();      // 로그인 전에 쓰던 브라우저 장바구니로 돌아갑니다
+
+    // 켜져 있던 하트를 모두 끕니다
+    document.querySelectorAll(".heart.on").forEach(function (h) {
+      h.classList.remove("on");
+    });
+
+    onHearts();
+    drawCart();
+  }
 
   /* =======================================================
      6. 무료 실측 신청
