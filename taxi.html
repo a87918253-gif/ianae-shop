@@ -5,373 +5,334 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이안애(E-安愛) 모든 택시</title>
 
+<!-- 글꼴 불러오기 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+
+<!-- 모든 페이지가 함께 쓰는 공용 디자인 -->
+<link rel="stylesheet" href="style.css">
+
 <style>
-  /* ===== 전체 배경 (밤거리 대형 승합택시 사진) ===== */
-  body {
-    margin: 0;
-    font-family: "맑은 고딕", sans-serif;
-    color: #2b2b2b;
+  /* =======================================================
+     이 페이지(택시)에서만 쓰는 디자인
+     ======================================================= */
 
-    /* 직접 찍은 차량 사진으로 바꾸려면:
-       1) shop 폴더에 img 폴더를 만들고 사진을 넣습니다 (예: img/venti.jpg)
-       2) 아래 url("...") 안을 url("img/venti.jpg") 로 바꿉니다 */
-    background-image: url("https://images.pexels.com/photos/16789398/pexels-photo-16789398.jpeg?auto=compress&cs=tinysrgb&w=1920");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-color: #1c1c22;
-  }
-
-  /* ===== 맨 위 (상호 + 메뉴) ===== */
-  header {
-    background-color: rgba(0,0,0,0.55);
-    padding: 30px 20px;
-    text-align: center;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 40px;
-    color: #ffd633;                 /* 택시 노란색 */
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-  }
-  header p {
-    margin: 8px 0 0 0;
-    font-size: 16px;
-    color: #f5f5f5;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-  }
-
-  nav {
-    background-color: rgba(0,0,0,0.65);
-    text-align: center;
-    padding: 14px 0;
-  }
-  nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #ffd633;
-    font-size: 16px;
-  }
-  nav a:hover {
-    color: #ffffff;
-  }
-
-  /* ===== 큰 배너 (전체화면) ===== */
+  /* ===== 큰 배너 ===== */
   .banner {
-    background-color: rgba(0,0,0,0.45);
-    height: 100vh;
+    position: relative;
+    height: 84vh;
+    min-height: 540px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 20px;
-    box-sizing: border-box;
+    padding: 0 24px;
+    overflow: hidden;
+  }
+  /* 배경 사진 — 아래 url 만 바꾸면 다른 사진으로 교체됩니다 */
+  .banner::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/1544955/pexels-photo-1544955.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;
+    background-position: center;
+  }
+  .banner::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+                rgba(18,21,16,0.62) 0%,
+                rgba(18,21,16,0.46) 45%,
+                rgba(18,21,16,0.74) 100%);
+  }
+  .banner > * { position: relative; z-index: 2; }
+
+  .banner .kicker {
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin: 0 0 20px 0;
   }
   .banner h2 {
-    font-size: 46px;
-    margin: 0 0 14px 0;
-    color: #ffd633;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+    font-size: 48px;
+    color: #fff;
+    margin: 0 0 16px 0;
+    line-height: 1.35;
+    text-shadow: 0 2px 22px rgba(0,0,0,0.5);
   }
-  .banner p {
-    font-size: 19px;
-    margin: 0 0 30px 0;
-    color: #ffffff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+  .banner .sub {
+    font-size: 17.5px;
+    color: #eee9df;
+    margin: 0 0 26px 0;
+    line-height: 1.9;
   }
   .banner .callnum {
-    font-size: 40px;
-    font-weight: 900;
-    color: #ffffff;
-    margin: 0 0 26px 0;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
-  }
-  .banner button {
-    background-color: #ffd633;
-    color: #000000;
-    font-weight: bold;
-    border: none;
-    padding: 16px 40px;
-    font-size: 19px;
-    border-radius: 30px;
-    cursor: pointer;
-  }
-  .banner button:hover {
-    background-color: #ffe066;
+    font-family: var(--serif);
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--gold-soft);
+    letter-spacing: 0.04em;
+    margin: 0 0 28px 0;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.5);
   }
 
-  /* ===== 서비스 안내 카드 ===== */
-  .services {
-    background-color: rgba(0,0,0,0.55);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
-    padding: 55px 20px;
-  }
+  /* ===== 서비스 4가지 ===== */
+  .services { background: var(--cream); padding: 92px 0 96px 0; }
+  .services .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .service {
-    background-color: white;
-    border-radius: 14px;
-    width: 250px;
-    padding: 26px 22px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 40px 28px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .service .icon {
-    font-size: 52px;
-  }
-  .service h3 {
-    font-size: 19px;
-    margin: 12px 0 10px 0;
-    color: #1f3d5c;
-  }
-  .service p {
-    font-size: 15px;
-    line-height: 1.7;
-    margin: 0;
-  }
+  .service:hover { transform: translateY(-6px); box-shadow: var(--shadow-m); }
+  .service .icon { font-size: 34px; margin-bottom: 16px; }
+  .service h3 { font-size: 19px; margin: 0 0 12px 0; }
+  .service p  { font-size: 14.5px; color: #8b9184; margin: 0; line-height: 1.85; }
 
   /* ===== 소개 ===== */
   .intro {
-    background-color: rgba(0,0,0,0.55);
-    padding: 0 20px 55px 20px;
-  }
-  .intro .box {
-    background-color: white;
-    max-width: 700px;
-    margin: 0 auto;
-    border-radius: 14px;
-    padding: 34px 30px;
+    position: relative;
+    padding: 96px 24px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    overflow: hidden;
   }
-  .intro h2 {
-    margin: 0 0 14px 0;
-    font-size: 26px;
-    color: #1f3d5c;
+  .intro::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=1600");
+    background-size: cover;
+    background-position: center;
   }
-  .intro p {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.8;
+  .intro::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(24,28,21,0.74);
   }
+  .intro > * { position: relative; z-index: 2; }
+  .intro h2 { color: #fff; font-size: 34px; margin: 0 0 16px 0; }
+  .intro p  { color: #ddd8cd; font-size: 16.5px; margin: 0 0 26px 0; line-height: 1.95; }
   .intro .call {
-    margin-top: 18px;
-    font-size: 20px;
-    font-weight: 900;
-    color: #1f3d5c;
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--gold-soft);
+    margin: 0;
+    letter-spacing: 0.03em;
   }
 
   /* ===== 요금 안내 ===== */
-  .fare {
-    background-color: rgba(0,0,0,0.65);
-    padding: 20px 20px 60px 20px;
-  }
-  .fare h2 {
-    text-align: center;
-    color: #ffd633;
-    font-size: 30px;
-    margin: 0 0 26px 0;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-  }
+  .fare { background: var(--cream-2); padding: 92px 0 100px 0; }
+  .fare .inner { max-width: 760px; margin: 0 auto; }
   .fare table {
-    background-color: white;
-    max-width: 620px;
     width: 100%;
-    margin: 0 auto;
     border-collapse: collapse;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  }
-  .fare th, .fare td {
-    padding: 15px 18px;
-    border-bottom: 1px solid #eee;
-    font-size: 16px;
-    text-align: left;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-s);
   }
   .fare th {
-    background-color: #ffd633;
-    color: #000000;
-    font-weight: bold;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 15.5px;
+    padding: 18px 24px;
+    text-align: left;
+    letter-spacing: 0.04em;
   }
-  .fare td:last-child {
+  .fare td {
+    padding: 18px 24px;
+    font-size: 15.5px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+  }
+  .fare tr td:last-child {
     text-align: right;
-    font-weight: bold;
-    color: #1f3d5c;
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
   }
+  .fare tbody tr:hover td { background: #fdfcfa; }
   .fare .note {
-    max-width: 620px;
-    margin: 16px auto 0 auto;
-    color: #ffffff;
-    font-size: 14px;
-    line-height: 1.8;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-  }
-
-  /* ===== 맨 아래 연락처 ===== */
-  footer {
-    background-color: rgba(0,0,0,0.75);
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 16px;
-    font-weight: bold;
+    margin: 22px 0 0 0;
+    font-size: 13.5px;
+    color: #9a9a90;
     line-height: 1.9;
-    color: #ffffff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-  }
-  footer strong {
-    font-size: 19px;
-    color: #ffd633;
   }
 
-  /* ===== 휴대폰 화면 (가로 700px 이하일 때만 적용) ===== */
+  /* ===== 휴대폰 화면 ===== */
+  @media (max-width: 960px) {
+    .services .grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 700px) {
-    header h1 { font-size: 25px; }
-    header p  { font-size: 15px; }
-    nav a     { margin: 0 8px; font-size: 15px; line-height: 2; }
+    .banner { min-height: 480px; }
+    .banner h2 { font-size: 30px; }
+    .banner .sub { font-size: 15.5px; }
+    .banner .callnum { font-size: 32px; }
 
-    .banner h2      { font-size: 32px; }
-    .banner p       { font-size: 17px; }
-    .banner .callnum { font-size: 34px; }
-    .banner button  { font-size: 18px; padding: 15px 34px; }
-
-    .services { padding: 35px 12px; gap: 12px; }
-    .service {
-      width: auto;
-      flex: 1 1 44%;
-      padding: 18px 12px;
-    }
-    .service .icon { font-size: 42px; }
+    .services, .fare { padding: 56px 0 62px 0; }
+    .service { padding: 30px 20px; }
     .service h3 { font-size: 17px; }
-    .service p  { font-size: 14px; }
+    .service p  { font-size: 13.5px; }
 
-    .intro { padding: 0 12px 35px 12px; }
-    .intro .box { padding: 24px 18px; }
-    .intro h2 { font-size: 22px; }
-    .intro p  { font-size: 17px; }
+    .intro { padding: 60px 20px; }
+    .intro h2 { font-size: 24px; }
+    .intro p  { font-size: 15px; }
+    .intro .call { font-size: 22px; }
 
-    .fare { padding: 15px 12px 40px 12px; }
-    .fare h2 { font-size: 26px; }
-    .fare th, .fare td { padding: 12px 12px; font-size: 15px; }
-
-    footer { font-size: 15px; }
+    .fare th, .fare td { padding: 14px 16px; font-size: 14px; }
   }
 </style>
 </head>
 
 <body>
 
-  <!-- 맨 위: 상호 + 한 줄 소개 -->
-  <header>
-    <h1>이안애(E-安愛) 모든 택시</h1>
-    <p>가까운 거리도 흔쾌히, 편안하게 모십니다</p>
+  <!-- ===== 맨 위 공지 줄 ===== -->
+  <div class="topbar">
+    24시간 콜 접수 &nbsp;·&nbsp; <b>단골 카드 10회 적립 시 1회 무료</b> &nbsp;·&nbsp; 짧은 거리도 환영합니다
+  </div>
+
+  <!-- ===== 상호 ===== -->
+  <header class="site">
+    <a href="taxi.html" class="logo">이안애 모든 택시</a>
+    <p class="tagline">가까운 거리도 흔쾌히</p>
   </header>
 
-  <!-- 메뉴 -->
-  <nav>
-    <a href="taxi.html">택시 홈</a>
+  <!-- ===== 메뉴 ===== -->
+  <nav class="site">
+    <a href="taxi.html" class="on">택시 홈</a>
     <a href="#service">서비스 안내</a>
     <a href="#fare">요금 안내</a>
+    <a href="index.html">바닥재 쇼핑몰</a>
+    <a href="blog.html">블로그</a>
+    <a href="join.html">회원가입</a>
   </nav>
 
-  <!-- 큰 배너 -->
-  <div class="banner">
-    <h2>부르시면 바로 갑니다</h2>
-    <p>새벽에도, 짐이 많아도, 짧은 거리도 괜찮습니다.</p>
+  <!-- ===== 큰 배너 ===== -->
+  <section class="banner">
+    <p class="kicker">24H CALL TAXI</p>
+    <h2>부르시면<br>바로 갑니다</h2>
+    <p class="sub">새벽에도, 짐이 많아도, 짧은 거리도 괜찮습니다.</p>
     <p class="callnum">1588-0000</p>
-    <button onclick="callTaxi()">택시 부르기</button>
-  </div>
+    <button class="btn btn-main" onclick="callTaxi()">택시 부르기</button>
+  </section>
 
-  <!-- 서비스 안내 -->
-  <div class="services" id="service">
+  <!-- ===== 서비스 안내 ===== -->
+  <section class="services" id="service">
+    <div class="wrap">
 
-    <div class="service">
-      <div class="icon">📞</div>
-      <h3>예약 콜</h3>
-      <p>하루 전에 예약하시면<br>출발 10분 전에 미리<br>집 앞으로 찾아뵙습니다.</p>
+      <div class="sec-head">
+        <span class="kicker">Service</span>
+        <hr class="rule">
+        <h2>이런 때에 불러주세요</h2>
+        <p>급할 때도, 불편할 때도 — 편하게 모시는 것이 먼저입니다.</p>
+      </div>
+
+      <div class="grid">
+        <div class="service">
+          <div class="icon">📞</div>
+          <h3>예약 콜</h3>
+          <p>하루 전에 예약하시면<br>출발 10분 전에 미리<br>집 앞으로 찾아뵙습니다.</p>
+        </div>
+        <div class="service">
+          <div class="icon">✈️</div>
+          <h3>공항 · KTX</h3>
+          <p>캐리어가 많으셔도<br>짐칸을 비워두고<br>함께 들어드립니다.</p>
+        </div>
+        <div class="service">
+          <div class="icon">🌙</div>
+          <h3>심야 안심 귀가</h3>
+          <p>집 앞 현관까지 확인하고<br>출발합니다. 원하시면<br>보호자께 문자를 보냅니다.</p>
+        </div>
+        <div class="service">
+          <div class="icon">🏥</div>
+          <h3>병원 동행</h3>
+          <p>진료가 끝날 때까지<br>기다렸다가<br>모셔다 드립니다.</p>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="service">
-      <div class="icon">✈️</div>
-      <h3>공항 · KTX</h3>
-      <p>캐리어가 많으셔도<br>짐칸을 비워두고<br>함께 들어드립니다.</p>
-    </div>
-
-    <div class="service">
-      <div class="icon">🌙</div>
-      <h3>심야 안심 귀가</h3>
-      <p>집 앞 현관까지 확인하고<br>출발합니다. 원하시면<br>보호자께 문자를 보냅니다.</p>
-    </div>
-
-    <div class="service">
-      <div class="icon">🏥</div>
-      <h3>병원 동행</h3>
-      <p>진료가 끝날 때까지<br>기다렸다가<br>모셔다 드립니다.</p>
-    </div>
-
-  </div>
-
-  <!-- 소개 -->
-  <div class="intro">
-    <div class="box">
-      <h2>이안애(E-安愛) 모든 택시 소개</h2>
-      <p>
-        택시 영업에 궁금한 사항을 해결해 드립니다.<br>
-        언제든 편하게 물어보세요.
-      </p>
-      <p class="call">문의 1588-0000</p>
-    </div>
-  </div>
-
-  <!-- 요금 안내 -->
-  <div class="fare" id="fare">
-    <h2>요금 안내</h2>
-
-    <table>
-      <tr>
-        <th>구분</th>
-        <th style="text-align:right;">요금</th>
-      </tr>
-      <tr>
-        <td>기본요금 (2km까지)</td>
-        <td>4,800원</td>
-      </tr>
-      <tr>
-        <td>거리요금 (131m당)</td>
-        <td>100원</td>
-      </tr>
-      <tr>
-        <td>심야 할증 (00시 ~ 04시)</td>
-        <td>20% 추가</td>
-      </tr>
-      <tr>
-        <td>공항 (예약 시 정액)</td>
-        <td>65,000원</td>
-      </tr>
-      <tr>
-        <td>단골 카드 10회 적립</td>
-        <td>1회 무료</td>
-      </tr>
-    </table>
-
-    <p class="note">
-      ※ 위 요금은 예시입니다. 실제 운행 요금으로 바꿔서 사용하세요.<br>
-      ※ 정기 출퇴근 고객은 월 단위 예약 시 할인해 드립니다.
-    </p>
-  </div>
-
-  <!-- 맨 아래: 연락처 -->
-  <footer>
+  <!-- ===== 소개 ===== -->
+  <section class="intro">
+    <h2>이안애 모든 택시 소개</h2>
     <p>
-      <strong>이안애(E-安愛) 모든 택시</strong> &nbsp;|&nbsp; 대표: 변성천<br>
-      전화: 1588-0000 (연중무휴)<br>
-      운행시간: 평일 06:00 ~ 익일 02:00 / 주말 06:00 ~ 익일 03:00<br>
-      이메일: help@ianae.co.kr
+      택시 영업에 궁금한 사항을 해결해 드립니다.<br>
+      언제든 편하게 물어보세요.
     </p>
-    <p>&copy; 2026 이안애(E-安愛) 모든 택시. All rights reserved.</p>
+    <p class="call">문의 1588-0000</p>
+  </section>
+
+  <!-- ===== 요금 안내 ===== -->
+  <section class="fare" id="fare">
+    <div class="wrap">
+
+      <div class="sec-head">
+        <span class="kicker">Fare</span>
+        <hr class="rule">
+        <h2>요금 안내</h2>
+      </div>
+
+      <div class="inner">
+        <table>
+          <tr>
+            <th>구분</th>
+            <th style="text-align:right;">요금</th>
+          </tr>
+          <tr>
+            <td>기본요금 (2km까지)</td>
+            <td>4,800원</td>
+          </tr>
+          <tr>
+            <td>거리요금 (131m당)</td>
+            <td>100원</td>
+          </tr>
+          <tr>
+            <td>심야 할증 (00시 ~ 04시)</td>
+            <td>20% 추가</td>
+          </tr>
+          <tr>
+            <td>공항 (예약 시 정액)</td>
+            <td>65,000원</td>
+          </tr>
+          <tr>
+            <td>단골 카드 10회 적립</td>
+            <td>1회 무료</td>
+          </tr>
+        </table>
+
+        <p class="note">
+          ※ 위 요금은 예시입니다. 실제 운행 요금으로 바꿔서 사용하세요.<br>
+          ※ 정기 출퇴근 고객은 월 단위 예약 시 할인해 드립니다.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 맨 아래 연락처 ===== -->
+  <footer class="site">
+    <p class="fname">이안애 모든 택시</p>
+    <p style="margin:0; font-size:13px; letter-spacing:0.16em; color:var(--gold-soft);">가까운 거리도 흔쾌히</p>
+    <hr class="fline">
+    <p style="margin:0;">
+      대표: 변성천<br>
+      전화: <a href="tel:15880000">1588-0000</a> (연중무휴)<br>
+      운행시간: 평일 06:00 ~ 익일 02:00 / 주말 06:00 ~ 익일 03:00<br>
+      이메일: <a href="mailto:help@ianae.co.kr">help@ianae.co.kr</a>
+    </p>
+    <p class="copy">&copy; 2026 이안애(E-安愛) 모든 택시. All rights reserved.</p>
   </footer>
+
+  <!-- 오른쪽 아래 떠 있는 전화 버튼 -->
+  <a href="tel:15880000" class="float-call"><span class="ring">☎</span> 택시 부르기 1588-0000</a>
 
 <script>
   // 택시 부르기 버튼

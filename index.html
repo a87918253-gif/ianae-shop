@@ -3,586 +3,1108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>이안애(E-安愛)</title>
+<title>이안애(E-安愛) — 집 안에 편안함을 깔다</title>
+<meta name="description" content="층간소음 걱정 없는 프리미엄 바닥재. 무료 실측, 가구 이동, 폐자재 처리까지 포함된 가격입니다.">
+
+<!-- 글꼴 불러오기 (명조체 + 본문체) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+
+<!-- 모든 페이지가 함께 쓰는 공용 디자인 -->
+<link rel="stylesheet" href="style.css">
 
 <style>
-  /* ===== 기본 설정 ===== */
-  /* ===== 전체 배경: 헤링본 마루 시공된 거실 사진 (페이지 전체 한 장) ===== */
-  body {
-    margin: 0;
-    font-family: "맑은 고딕", sans-serif;
-    color: #3d4a35;
+  /* =======================================================
+     이 페이지(메인)에서만 쓰는 디자인
+     ======================================================= */
 
-    /* 아래 url 부분만 바꾸면 다른 사진으로 교체됩니다 */
-    background-image: url("https://images.pexels.com/photos/36215272/pexels-photo-36215272.jpeg?auto=compress&cs=tinysrgb&w=1920");
-    background-size: cover;          /* 화면에 꽉 채우기 */
-    background-position: center;
-    background-attachment: fixed;    /* 스크롤해도 사진은 고정 */
-    background-color: #e8dcc8;
-  }
-
-  /* ===== 맨 위 (제목 + 메뉴) ===== */
-  header {
-    background-color: rgba(214,233,247,0.88);  /* 은은한 연한 파란색 (반투명) */
-    padding: 30px 20px;
-    text-align: center;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 36px;
-    color: #3f7095;
-  }
-  header p {
-    margin: 8px 0 0 0;
-    font-size: 16px;
-  }
-
-  nav {
-    background-color: rgba(232,244,252,0.88);
-    text-align: center;
-    padding: 14px 0;
-  }
-  nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #3f7095;
-    font-size: 16px;
-  }
-  nav a:hover {
-    color: #7fb0d4;
-  }
-
-  /* ===== 큰 배너 (배경 사진 위에 글씨만) ===== */
-  .banner {
-    background-color: rgba(0,0,0,0.22);   /* 글씨가 잘 보이도록 살짝 어둡게 */
-    height: 100vh;                 /* 화면 높이만큼 = 전체화면 */
-    display: flex;                 /* 글자를 가운데로 모으기 */
+  /* ===== 1. 큰 배너 (첫 화면) ===== */
+  .hero {
+    position: relative;
+    /* 위쪽 공지줄·상호·메뉴 높이를 뺀 나머지를 꽉 채웁니다 */
+    height: calc(100vh - 230px);
+    min-height: 620px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 20px;
-    box-sizing: border-box;
+    padding: 0 24px;
+    overflow: hidden;
   }
-  .banner h2 {
-    font-size: 46px;
-    margin: 0 0 14px 0;
-    color: #ffffff;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  /* 배경 사진 — 아래 url 만 바꾸면 다른 사진으로 교체됩니다 */
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/36215272/pexels-photo-36215272.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.06);
+    animation: slowzoom 22s ease-in-out infinite alternate;
   }
-  .banner p {
-    font-size: 19px;
-    margin: 0 0 30px 0;
-    color: #f3f9fd;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  @keyframes slowzoom {
+    from { transform: scale(1.06); }
+    to   { transform: scale(1.16); }
   }
-  .banner button {
-    background-color: #7fa863;
-    color: white;
-    border: none;
-    padding: 14px 34px;
-    font-size: 17px;
-    border-radius: 30px;
-    cursor: pointer;
+  /* 사진 위에 덮는 어두운 막 (글씨가 또렷하게 보이도록) */
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+                rgba(20,24,18,0.52) 0%,
+                rgba(20,24,18,0.34) 45%,
+                rgba(20,24,18,0.68) 100%);
   }
-  .banner button:hover {
-    background-color: #6b9152;
-  }
+  .hero > * { position: relative; z-index: 2; }
 
-  /* ===== 상품 카드 ===== */
-  .products {
+  .hero .kicker {
+    font-size: 13px;
+    letter-spacing: 0.32em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .hero h2 {
+    font-size: 56px;
+    color: #fff;
+    margin: 0 0 20px 0;
+    line-height: 1.32;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.45);
+  }
+  .hero .sub {
+    font-size: 18.5px;
+    color: #f0ece3;
+    margin: 0 0 38px 0;
+    line-height: 1.9;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+  }
+  .hero .btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  /* 배너 아래 작은 안내 */
+  .hero .mini {
+    margin-top: 40px;
     display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
     justify-content: center;
-    flex-wrap: nowrap;      /* 줄바꿈 안 함 = 6개가 한 줄에 */
-    gap: 16px;
-    padding: 50px 20px;
-    overflow-x: auto;       /* 화면이 좁으면 옆으로 밀어서 보기 */
+    font-size: 14px;
+    color: #e7e2d6;
+    letter-spacing: 0.02em;
   }
-  .card {
-    position: relative;   /* BEST 표시를 카드 안에 붙이기 위해 필요 */
-    background-color: white;
-    border: 1px solid #dff0d0;
-    border-radius: 14px;
-    flex: 1 1 0;          /* 화면 너비에 맞춰 6개가 똑같이 나눠 가짐 */
-    min-width: 180px;     /* 이보다 작아지지는 않음 */
-    max-width: 250px;
-    padding: 18px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.22);   /* 사진 위에 카드가 떠 보이게 */
+  .hero .mini span::before { content: "✓ "; color: var(--gold-soft); font-weight: 700; }
+
+  /* 스크롤 안내 */
+  .scroll-cue {
+    position: absolute;
+    bottom: 26px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    animation: bob 2s ease-in-out infinite;
   }
-  /* ===== 상품 영역 (배경 사진이 그대로 비쳐 보임) ===== */
-  .shop-bg {
-    background-color: rgba(0,0,0,0.18);   /* 아주 옅은 막 */
-    padding-bottom: 40px;
+  @keyframes bob {
+    0%,100% { transform: translate(-50%, 0); }
+    50%     { transform: translate(-50%, 8px); }
   }
 
-  /* ===== 검색창 ===== */
-  .search {
-    text-align: center;
-    padding: 45px 20px 0 20px;
+  /* ===== 2. 약속 4가지 (믿음 주는 줄) ===== */
+  .promise {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 44px 0;
   }
+  .promise .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    text-align: center;
+  }
+  .promise .item { padding: 0 14px; }
+  .promise .item + .item { border-left: 1px solid var(--line); }
+  .promise .ico { font-size: 27px; margin-bottom: 10px; }
+  .promise .t {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .promise .d { font-size: 13.5px; color: #8b9184; line-height: 1.6; }
+
+  /* ===== 3. 오늘의 특가 (남은 시간) ===== */
+  .deal {
+    background: var(--ink);
+    color: #fff;
+    padding: 26px 0;
+    text-align: center;
+  }
+  .deal .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .deal .label {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .deal .label b { color: var(--gold-soft); }
+  .deal .clock { display: flex; gap: 7px; align-items: center; }
+  .deal .unit {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(217,195,155,0.35);
+    border-radius: 3px;
+    padding: 7px 12px;
+    min-width: 54px;
+    text-align: center;
+  }
+  .deal .unit .n {
+    display: block;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--gold-soft);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .deal .unit .u { font-size: 10.5px; color: #b6b2a7; letter-spacing: 0.08em; }
+
+  /* ===== 4. 상품 영역 ===== */
+  .shop { padding: 92px 0 100px 0; background: var(--cream); }
+
+  /* 검색창 */
+  .search { text-align: center; margin-bottom: 26px; }
   .search input {
     width: 100%;
-    max-width: 420px;
-    padding: 14px 22px;
-    font-size: 16px;
-    border: 2px solid #a8cd8c;
-    border-radius: 26px;
-    box-sizing: border-box;
+    max-width: 440px;
+    padding: 15px 24px;
+    font-family: var(--sans);
+    font-size: 15.5px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: border-color 0.2s ease;
   }
-  .search input:focus {
-    outline: none;
-    border-color: #7fa863;
-  }
+  .search input::placeholder { color: #a9a99e; }
+  .search input:focus { outline: none; border-color: var(--gold); }
 
-  /* 찾는 상품이 없을 때 나오는 안내 (처음에는 숨김) */
-  .no-result {
-    display: none;
-    background-color: white;
-    max-width: 460px;
-    margin: 0 auto 30px auto;
-    padding: 30px 24px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 17px;
-    line-height: 1.8;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.22);
-  }
-
-  /* ===== 카테고리 버튼 ===== */
-  .category {
-    text-align: center;
-    padding: 45px 20px 0 20px;
-  }
+  /* 카테고리 버튼 */
+  .category { text-align: center; margin-bottom: 46px; }
   .category button {
-    background-color: #ffffff;   /* 흰색 바탕 */
-    color: #000000;              /* 검정색 글씨 */
-    font-weight: bold;
-    border: 2px solid #cccccc;
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-weight: 500;
+    border: 1px solid var(--line);
     padding: 10px 24px;
-    margin: 0 5px;
-    font-size: 16px;
-    border-radius: 24px;
+    margin: 4px 3px;
+    font-size: 14.5px;
+    border-radius: 40px;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
-  .category button:hover {
-    background-color: #f0f0f0;   /* 마우스를 올리면 옅은 회색 */
-  }
-  .category button.on {          /* 지금 선택된 버튼 */
-    background-color: #e8e8e8;
-    color: #000000;
-    border-color: #000000;       /* 검은 테두리로 표시 */
+  .category button:hover { border-color: var(--gold); color: var(--gold); }
+  .category button.on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+    font-weight: 600;
   }
 
-  /* ===== 상품 사진 (무료 사진: Pexels) ===== */
-  /* url("...") 안의 주소만 바꾸면 다른 사진으로 교체됩니다 */
+  /* 상품 카드 — 한 줄에 3개 */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  .card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover { transform: translateY(-7px); box-shadow: var(--shadow-l); }
+
+  /* 상품 사진 (무료 사진: Pexels) */
+  .photo-box { overflow: hidden; }
   .photo {
-    height: 170px;
-    border-radius: 10px;
-    border: 1px solid #e4e4e4;
-    background-size: cover;       /* 카드에 꽉 채우기 */
+    height: 236px;
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    transition: transform 0.6s ease;
   }
+  .card:hover .photo { transform: scale(1.06); }
 
-  /* 1. EVA 층간소음 매트 - 거실 마루 바닥 */
-  .wood {
-    background-image: url("https://images.pexels.com/photos/17181935/pexels-photo-17181935.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
+  /* 1. EVA 층간소음 매트 */
+  .wood      { background-image: url("https://images.pexels.com/photos/17181935/pexels-photo-17181935.jpeg?auto=compress&cs=tinysrgb&w=900"); }
+  /* 2. TPE 홈짐 매트 */
+  .rubber    { background-image: url("https://images.pexels.com/photos/6752163/pexels-photo-6752163.jpeg?auto=compress&cs=tinysrgb&w=900"); }
+  /* 3. 체육관용 PVC 바닥재 */
+  .court     { background-image: url("https://images.pexels.com/photos/5407033/pexels-photo-5407033.jpeg?auto=compress&cs=tinysrgb&w=900"); }
+  /* 4. 거실용 강마루 (헤링본) */
+  .livingwood{ background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=900"); }
+  /* 5. 아이용 장판 */
+  .kids      { background-image: url("https://images.pexels.com/photos/4544598/pexels-photo-4544598.jpeg?auto=compress&cs=tinysrgb&w=900"); }
+  /* 6. 태권도 퍼즐 매트 */
+  .taekwondo { background-image: url("https://images.pexels.com/photos/7045594/pexels-photo-7045594.jpeg?auto=compress&cs=tinysrgb&w=900"); }
 
-  /* 2. TPE 홈짐 매트 - 운동매트 */
-  .rubber {
-    background-image: url("https://images.pexels.com/photos/6752163/pexels-photo-6752163.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
-
-  /* 3. 체육관용 PVC 바닥재 - 실내 체육관 코트 */
-  .court {
-    background-image: url("https://images.pexels.com/photos/5407033/pexels-photo-5407033.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
-
-  /* 4. 거실용 강마루 - 헤링본 마루 시공 */
-  .livingwood {
-    background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
-
-  /* 5. 아이용 장판 - 아이들이 노는 바닥 */
-  .kids {
-    background-image: url("https://images.pexels.com/photos/4544598/pexels-photo-4544598.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
-
-  /* 6. 태권도 퍼즐 매트 - 도장 매트 */
-  .taekwondo {
-    background-image: url("https://images.pexels.com/photos/7045594/pexels-photo-7045594.jpeg?auto=compress&cs=tinysrgb&w=900");
-  }
-  .card h3 {
-    font-size: 18px;
-    margin: 14px 0 6px 0;
-  }
-  /* BEST 표시 */
-  /* 하트 찜하기 버튼 (카드 오른쪽 위) */
-  .card .heart {
+  /* 카드 왼쪽 위 표시 (BEST / 인기) */
+  .badge {
     position: absolute;
-    top: 10px;
-    right: 12px;
-    background: none;
+    top: 0; left: 0;
+    z-index: 3;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 7px 14px;
+  }
+  .badge.gold { background: var(--gold); }
+
+  /* 하트 찜하기 */
+  .heart {
+    position: absolute;
+    top: 12px; right: 12px;
+    z-index: 3;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.92);
     border: none;
-    padding: 0;
-    margin: 0;
-    font-size: 28px;
+    border-radius: 50%;
+    font-size: 17px;
     line-height: 1;
     cursor: pointer;
-    color: #d5d5d5;          /* 찜하기 전: 흐린 회색 */
+    color: #c6c6bd;
+    box-shadow: var(--shadow-s);
+    transition: all 0.2s ease;
   }
-  .card .heart:hover {
-    background: none;
-    color: #f0a49c;
-  }
-  .card .heart.on {
-    color: #e2574c;          /* 찜한 뒤: 진한 빨강 */
-  }
+  .heart:hover { color: #e08b84; transform: scale(1.1); }
+  .heart.on    { color: var(--sale); }
 
-  /* 맨 위 찜한 개수 */
-  .wish-count {
-    display: inline-block;
-    margin-top: 12px;
-    background-color: #ffffff;
-    color: #e2574c;
-    font-weight: bold;
-    font-size: 15px;
-    padding: 8px 20px;
-    border-radius: 20px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  .card .body { padding: 22px 22px 24px 22px; display: flex; flex-direction: column; flex: 1; }
+  .card .cat {
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 9px;
   }
+  .card h3 { font-size: 19px; margin: 0 0 8px 0; }
+  .card .benefit {
+    font-size: 14px;
+    color: #8b9184;
+    margin: 0 0 14px 0;
+    line-height: 1.6;
+    min-height: 44px;
+  }
+  .card .stars { font-size: 13px; color: #9a9a90; margin-bottom: 14px; }
+  .card .stars b { color: var(--gold); letter-spacing: 0.06em; }
 
-  .best {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background-color: #e2574c;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 5px 12px;
-    border-radius: 14px;
-  }
-  /* 할인 전 가격 (취소선) */
+  .price-row { margin-top: auto; }
   .old-price {
-    color: #8a8a8a;
+    color: #a8a89e;
     text-decoration: line-through;
-    font-size: 19px;
-    font-weight: bold;
+    font-size: 14.5px;
+    margin: 0;
   }
-  /* 할인율 (빨간색) */
-  .sale {
-    color: #e2574c;
-    font-weight: 900;
-  }
-  /* 판매 가격 */
+  .sale { color: var(--sale); font-weight: 800; margin-right: 7px; }
   .price {
-    color: #4a7a2f;
+    color: var(--ink);
+    font-family: var(--serif);
     font-size: 27px;
-    font-weight: 900;
-    margin: 4px 0 16px 0;
+    font-weight: 700;
+    margin: 2px 0 4px 0;
   }
-  .card button {
-    background-color: #a8cd8c;
-    color: white;
+  .price .per { font-family: var(--sans); font-size: 13px; color: #9a9a90; font-weight: 400; }
+  .ship { font-size: 12.5px; color: var(--olive); font-weight: 600; margin: 0 0 16px 0; }
+
+  .card .buy {
+    width: 100%;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--sans);
     border: none;
-    padding: 10px 22px;
+    padding: 14px;
     font-size: 15px;
-    border-radius: 20px;
+    font-weight: 600;
+    border-radius: 2px;
     cursor: pointer;
+    transition: background 0.2s ease;
   }
-  .card button:hover {
-    background-color: #7fa863;
-  }
+  .card .buy:hover { background: var(--olive); }
 
-  /* ===== 맨 아래 연락처 ===== */
-  /* ===== 맨 아래 연락처 (배경 사진이 그대로 이어짐) ===== */
-  footer {
-    background-color: rgba(0,0,0,0.45);   /* 글씨가 잘 보이도록 어둡게 */
+  /* 찾는 상품이 없을 때 */
+  .no-result {
+    display: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    max-width: 480px;
+    margin: 20px auto 0 auto;
+    padding: 40px 26px;
     text-align: center;
-    padding: 40px 20px;
     font-size: 16px;
-    font-weight: bold;                    /* 안내 글씨 진하게 */
     line-height: 1.9;
-    color: #ffffff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   }
-  footer strong {
+
+  /* ===== 5. 이런 고민 있으셨죠 ===== */
+  .worry { background: #fff; padding: 96px 0; }
+  .worry .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .worry .item {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 38px 30px;
+    text-align: center;
+  }
+  .worry .q {
+    font-family: var(--serif);
     font-size: 19px;
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0 0 16px 0;
   }
+  .worry .q::before {
+    content: "“";
+    display: block;
+    font-size: 44px;
+    color: var(--gold-soft);
+    line-height: 0.6;
+    margin-bottom: 14px;
+  }
+  .worry .arrow { color: var(--gold); font-size: 17px; margin-bottom: 12px; }
+  .worry .a { font-size: 15px; color: var(--ink-soft); margin: 0; line-height: 1.85; }
+  .worry .a b { color: var(--olive); font-weight: 700; }
 
-  /* ===== 휴대폰 화면 (가로 700px 이하일 때만 적용) ===== */
+  /* ===== 6. 후기 ===== */
+  .review { background: var(--cream-2); padding: 96px 0; }
+  .review .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .review .item {
+    background: #fff;
+    padding: 34px 30px;
+    border-radius: 3px;
+    box-shadow: var(--shadow-s);
+  }
+  .review .st { color: var(--gold); font-size: 15px; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .review .txt { font-size: 15.5px; color: var(--ink-soft); line-height: 1.95; margin: 0 0 20px 0; }
+  .review .who {
+    font-size: 13.5px;
+    color: #9a9a90;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .review .who b { color: var(--ink); font-weight: 600; }
+  .note { text-align: center; font-size: 13px; color: #9a9a90; margin-top: 26px; line-height: 1.8; }
+
+  /* ===== 7. 무료 실측 신청 ===== */
+  .quote {
+    position: relative;
+    padding: 104px 0;
+    text-align: center;
+    overflow: hidden;
+  }
+  .quote::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=1600");
+    background-size: cover;
+    background-position: center;
+  }
+  .quote::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(24,28,21,0.72);
+  }
+  .quote > * { position: relative; z-index: 2; }
+  .quote .kicker { font-size: 13px; letter-spacing: 0.28em; color: var(--gold-soft); font-weight: 600; margin-bottom: 16px; }
+  .quote h2 { color: #fff; font-size: 38px; margin: 0 0 16px 0; }
+  .quote p  { color: #e3ded3; font-size: 17px; margin: 0 0 34px 0; line-height: 1.9; }
+
+  .form {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .form input, .form select {
+    font-family: var(--sans);
+    font-size: 15px;
+    padding: 15px 16px;
+    border: 1px solid rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.10);
+    color: #fff;
+    border-radius: 2px;
+  }
+  .form input::placeholder { color: rgba(255,255,255,0.6); }
+  .form select option { color: var(--ink); }
+  .form input:focus, .form select:focus { outline: none; border-color: var(--gold-soft); }
+  .form .full { grid-column: 1 / -1; }
+
+  /* ===== 8. 자주 묻는 질문 ===== */
+  .faq { background: var(--cream); padding: 92px 0 100px 0; }
+  .faq .list { max-width: 820px; margin: 0 auto; }
+  .faq .qa { border-bottom: 1px solid var(--line); }
+  .faq .qa button {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 24px 40px 24px 0;
+    cursor: pointer;
+    position: relative;
+  }
+  .faq .qa button::after {
+    content: "+";
+    position: absolute;
+    right: 6px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--gold);
+    font-family: var(--sans);
+  }
+  .faq .qa.open button::after { content: "−"; }
+  .faq .qa .ans {
+    display: none;
+    padding: 0 0 26px 0;
+    font-size: 15.5px;
+    color: var(--ink-soft);
+    line-height: 1.95;
+  }
+  .faq .qa.open .ans { display: block; }
+
+  /* ===== 찜 / 장바구니 개수 (머리말 안) ===== */
+  .counters {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .counters span {
+    font-size: 13px;
+    color: var(--ink-soft);
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 7px 16px;
+    border-radius: 30px;
+  }
+  .counters b { color: var(--sale); font-weight: 700; }
+
+  /* ===== 화면에 들어올 때 살짝 떠오르는 효과 ===== */
+  .up { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .up.shown { opacity: 1; transform: none; }
+
+  /* =======================================================
+     화면이 좁을 때
+     ======================================================= */
+  @media (max-width: 960px) {
+    .products      { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .worry .grid,
+    .review .grid  { grid-template-columns: 1fr; }
+    .promise .grid { grid-template-columns: repeat(2, 1fr); row-gap: 30px; }
+    .promise .item:nth-child(3) { border-left: none; }
+    .form { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 700px) {
-    header h1 { font-size: 30px; }
-    header p  { font-size: 15px; }
-    nav a     { margin: 0 8px; font-size: 15px; line-height: 2; }
+    .hero { height: auto; min-height: 560px; padding: 90px 24px 80px 24px; }
+    .hero h2 { font-size: 33px; }
+    .hero .sub { font-size: 15.5px; }
+    .hero .kicker { font-size: 11.5px; letter-spacing: 0.24em; }
+    .hero .btns { flex-direction: column; width: 100%; max-width: 300px; }
+    .hero .btns .btn { width: 100%; }
+    .hero .mini { gap: 14px; font-size: 12.5px; margin-top: 30px; }
 
-    .banner h2 { font-size: 30px; }
-    .banner p  { font-size: 16px; }
+    .promise { padding: 34px 0; }
+    .promise .item { padding: 0 6px; }
+    .promise .t { font-size: 15px; }
+    .promise .d { font-size: 12px; }
 
-    .search input { font-size: 16px; padding: 12px 18px; }
+    .deal .label { font-size: 16px; }
+    .deal .unit { min-width: 46px; padding: 6px 9px; }
+    .deal .unit .n { font-size: 18px; }
 
-    .category button {
-      padding: 9px 15px;
-      font-size: 15px;
-      margin: 4px 3px;
-    }
+    .shop, .worry, .review, .faq { padding: 60px 0 66px 0; }
+    .quote { padding: 70px 0; }
+    .quote h2 { font-size: 27px; }
+    .quote p  { font-size: 15.5px; }
 
-    /* 상품을 한 줄에 2개씩 줄바꿈 */
-    .products {
-      flex-wrap: wrap;
-      overflow-x: visible;
-      gap: 12px;
-      padding: 30px 12px;
-    }
-    .card {
-      flex: 1 1 44%;
-      min-width: 140px;
-      max-width: none;
-      padding: 14px;
-    }
+    .photo { height: 150px; }
+    .card .body { padding: 16px 15px 18px 15px; }
+    .card h3 { font-size: 16px; }
+    .card .benefit { font-size: 13px; min-height: 40px; }
+    .card .stars { font-size: 12px; }
+    .price { font-size: 22px; }
+    .old-price { font-size: 13px; }
+    .card .buy { padding: 12px; font-size: 14px; }
 
-    .photo      { height: 120px; }
-    .card h3    { font-size: 16px; }
-    .old-price  { font-size: 16px; }
-    .price      { font-size: 23px; }
-    .card .heart { font-size: 26px; }
-
-    footer { font-size: 15px; }
+    .worry .item  { padding: 30px 22px; }
+    .review .item { padding: 26px 22px; }
+    .form { grid-template-columns: 1fr; }
+    .faq .qa button { font-size: 16px; padding: 20px 34px 20px 0; }
   }
 </style>
 </head>
 
 <body>
 
-  <!-- 맨 위: 쇼핑몰 이름 + 한 줄 소개 -->
-  <header>
-    <h1>이안애(E-安愛)</h1>
-    <p>집 안에 편안함을 깔다 — 주거용 · 체육관용 바닥재 전문점</p>
-    <p><span class="wish-count" id="wishCount">찜한 상품 0개</span></p>
+  <!-- ===== 맨 위 공지 줄 ===== -->
+  <div class="topbar">
+    신규회원 <b>전 품목 10% 할인</b> &nbsp;·&nbsp; 전국 <b>무료 실측</b> &nbsp;·&nbsp; 가구 이동 · 폐자재 처리 <b>무료</b>
+  </div>
+
+  <!-- ===== 상호 ===== -->
+  <header class="site">
+    <a href="index.html" class="logo">이안애 <span style="font-size:0.62em; color:var(--gold);">E-安愛</span></a>
+    <p class="tagline">집 안에 편안함을 깔다</p>
+    <div class="counters">
+      <span id="wishCount">찜한 상품 <b>0</b>개</span>
+      <span id="cartCount">장바구니 <b>0</b>개</span>
+    </div>
   </header>
 
-  <!-- 메뉴 7개 -->
-  <nav>
-    <a href="#">전체상품</a>
-    <a href="#">주거용 바닥재</a>
-    <a href="#">체육관용 바닥재</a>
-    <a href="#">시공 문의</a>
+  <!-- ===== 메뉴 ===== -->
+  <nav class="site">
+    <a href="#shop" class="on">전체상품</a>
+    <a href="#shop" onclick="showCategory('home', null)">주거용 바닥재</a>
+    <a href="#shop" onclick="showCategory('gym', null)">체육관용 바닥재</a>
+    <a href="#quote">무료 실측 신청</a>
+    <a href="#review">고객 후기</a>
     <a href="blog.html">블로그</a>
     <a href="taxi.html">모든 택시</a>
     <a href="join.html">회원가입</a>
   </nav>
 
-  <!-- 큰 배너 -->
-  <div class="banner">
-    <h2>층간소음 걱정 없는 하루</h2>
-    <p>아이도 어른도 마음 놓고 걷는 바닥, 이안애가 만들어 드립니다.</p>
-    <button onclick="showEvent()">신규회원 10% 할인받기</button>
-  </div>
-
-  <div class="shop-bg">
-
-  <!-- 검색창 -->
-  <div class="search">
-    <input type="text" id="searchBox" onkeyup="searchProduct()"
-           placeholder="상품 이름을 검색하세요 (예: 마루, 매트)">
-  </div>
-
-  <!-- 카테고리 버튼 -->
-  <div class="category">
-    <button class="on" onclick="showCategory('all', this)">전체상품</button>
-    <button onclick="showCategory('home', this)">주거용 바닥재</button>
-    <button onclick="showCategory('gym', this)">체육관 바닥재</button>
-    <button onclick="askBuild()">시공문의</button>
-  </div>
-
-  <!-- 상품 카드 6개 -->
-  <div class="products">
-
-    <div class="card" data-category="home">
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo wood"></div>
-      <h3>EVA 고밀도 층간소음 매트</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('EVA 고밀도 층간소음 매트')">장바구니 담기</button>
+  <!-- ===== 1. 첫 화면 ===== -->
+  <section class="hero">
+    <p class="kicker">PREMIUM FLOORING</p>
+    <h2>발끝에 닿는 순간,<br>집이 달라집니다</h2>
+    <p class="sub">
+      아이가 뛰어도 마음이 편한 바닥.<br>
+      실측부터 시공, 뒷정리까지 이안애가 다 해드립니다.
+    </p>
+    <div class="btns">
+      <a href="#shop" class="btn btn-main">베스트 상품 보기</a>
+      <a href="#quote" class="btn btn-line">무료 실측 신청하기</a>
     </div>
-
-    <div class="card" data-category="home">
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo rubber"></div>
-      <h3>TPE 홈짐 운동매트 15mm</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('TPE 홈짐 운동매트 15mm')">장바구니 담기</button>
+    <div class="mini">
+      <span>방문 실측 0원</span>
+      <span>가구 이동 무료</span>
+      <span>폐자재 처리 무료</span>
+      <span>친환경 자재</span>
     </div>
+    <div class="scroll-cue">SCROLL</div>
+  </section>
 
-    <div class="card" data-category="gym">
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo court"></div>
-      <h3>체육관용 PVC 탄성 바닥재</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('체육관용 PVC 탄성 바닥재')">장바구니 담기</button>
+  <!-- ===== 2. 약속 4가지 ===== -->
+  <section class="promise">
+    <div class="wrap">
+      <div class="grid">
+        <div class="item">
+          <div class="ico">📏</div>
+          <div class="t">무료 방문 실측</div>
+          <div class="d">전화 한 통이면 찾아뵙고<br>견적서까지 무료로 드립니다</div>
+        </div>
+        <div class="item">
+          <div class="ico">🛋️</div>
+          <div class="t">가구 이동 무료</div>
+          <div class="d">무거운 장롱·소파<br>저희가 옮기고 되돌려 놓습니다</div>
+        </div>
+        <div class="item">
+          <div class="ico">🍃</div>
+          <div class="t">친환경 자재</div>
+          <div class="d">아이가 뒹굴어도 안심하는<br>저방출 등급 자재만 씁니다</div>
+        </div>
+        <div class="item">
+          <div class="ico">🧹</div>
+          <div class="t">뒷정리까지</div>
+          <div class="d">뜯어낸 자재 전부 가져가고<br>청소까지 마치고 나옵니다</div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="card" data-category="home">
-      <span class="best">BEST</span>
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo livingwood"></div>
-      <h3>거실용 강마루 (오크)</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('거실용 강마루 (오크)')">장바구니 담기</button>
+  <!-- ===== 3. 오늘의 특가 (자정까지 남은 시간) ===== -->
+  <section class="deal">
+    <div class="wrap">
+      <div class="row">
+        <div class="label">오늘의 특가 <b>최대 31% 할인</b> — 마감까지</div>
+        <div class="clock">
+          <div class="unit"><span class="n" id="hh">00</span><span class="u">시간</span></div>
+          <div class="unit"><span class="n" id="mm">00</span><span class="u">분</span></div>
+          <div class="unit"><span class="n" id="ss">00</span><span class="u">초</span></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="card" data-category="home">
-      <span class="best">BEST</span>
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo kids"></div>
-      <h3>아이용 친환경 장판</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('아이용 친환경 장판')">장바구니 담기</button>
+  <!-- ===== 4. 상품 ===== -->
+  <section class="shop" id="shop">
+    <div class="wrap">
+
+      <div class="sec-head up">
+        <span class="kicker">Best Collection</span>
+        <hr class="rule">
+        <h2>주부님들이 가장 많이 고르신 바닥재</h2>
+        <p>층간소음, 아이 안전, 청소 편함 — 세 가지를 다 따져서 골랐습니다.</p>
+      </div>
+
+      <!-- 검색창 -->
+      <div class="search up">
+        <input type="text" id="searchBox" onkeyup="searchProduct()"
+               placeholder="상품 이름으로 찾기 (예: 마루, 매트, 장판)">
+      </div>
+
+      <!-- 카테고리 버튼 -->
+      <div class="category up">
+        <button class="on" onclick="showCategory('all', this)">전체상품</button>
+        <button onclick="showCategory('home', this)">주거용 바닥재</button>
+        <button onclick="showCategory('gym', this)">체육관 바닥재</button>
+        <button onclick="location.href='#quote'">시공 문의</button>
+      </div>
+
+      <!-- 상품 카드 6개 -->
+      <!-- 별점과 후기 수는 예시입니다. 실제 숫자로 바꿔서 쓰세요. -->
+      <div class="products">
+
+        <div class="card up" data-category="home">
+          <span class="badge gold">인기</span>
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo wood"></div></div>
+          <div class="body">
+            <p class="cat">층간소음</p>
+            <h3>EVA 고밀도 층간소음 매트 10mm</h3>
+            <p class="benefit">아이 발소리가 아랫집까지 가지 않게. 물걸레로 쓱 닦이는 표면입니다.</p>
+            <p class="stars"><b>★★★★★</b> 4.9 · 후기 1,284</p>
+            <div class="price-row">
+              <p class="old-price">39,000원</p>
+              <p class="price"><span class="sale"></span>26,900원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료배송 · 오늘 출발</p>
+              <button class="buy" onclick="addCart('EVA 고밀도 층간소음 매트 10mm')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card up" data-category="home">
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo rubber"></div></div>
+          <div class="body">
+            <p class="cat">홈트레이닝</p>
+            <h3>TPE 프리미엄 홈짐 매트 15mm</h3>
+            <p class="benefit">덤벨을 내려놔도 조용합니다. 중량 충격음 최대 28dB 감소.</p>
+            <p class="stars"><b>★★★★★</b> 4.8 · 후기 612</p>
+            <div class="price-row">
+              <p class="old-price">68,000원</p>
+              <p class="price"><span class="sale"></span>47,600원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료배송 · 오늘 출발</p>
+              <button class="buy" onclick="addCart('TPE 프리미엄 홈짐 매트 15mm')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card up" data-category="gym">
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo court"></div></div>
+          <div class="body">
+            <p class="cat">체육관 전용</p>
+            <h3>체육관용 PVC 탄성 바닥재 4.5mm</h3>
+            <p class="benefit">무릎에 부담이 적은 탄성층. 실내 코트에 쓰이는 등급입니다.</p>
+            <p class="stars"><b>★★★★☆</b> 4.7 · 후기 208</p>
+            <div class="price-row">
+              <p class="old-price">125,000원</p>
+              <p class="price"><span class="sale"></span>98,000원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료 실측 · 전문 시공</p>
+              <button class="buy" onclick="addCart('체육관용 PVC 탄성 바닥재 4.5mm')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card up" data-category="home">
+          <span class="badge">BEST</span>
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo livingwood"></div></div>
+          <div class="body">
+            <p class="cat">거실 마루</p>
+            <h3>오크 헤링본 강마루 7.5mm</h3>
+            <p class="benefit">거실이 두 배로 넓어 보입니다. 긁힘에 강해 오래 씁니다.</p>
+            <p class="stars"><b>★★★★★</b> 5.0 · 후기 947</p>
+            <div class="price-row">
+              <p class="old-price">89,000원</p>
+              <p class="price"><span class="sale"></span>62,300원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료 실측 · 시공비 포함</p>
+              <button class="buy" onclick="addCart('오크 헤링본 강마루 7.5mm')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card up" data-category="home">
+          <span class="badge">BEST</span>
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo kids"></div></div>
+          <div class="body">
+            <p class="cat">아이 방</p>
+            <h3>아이 안심 친환경 장판 6mm</h3>
+            <p class="benefit">푹신해서 넘어져도 덜 아픕니다. 크레파스 자국도 잘 지워집니다.</p>
+            <p class="stars"><b>★★★★★</b> 4.9 · 후기 1,536</p>
+            <div class="price-row">
+              <p class="old-price">54,000원</p>
+              <p class="price"><span class="sale"></span>37,800원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료배송 · 오늘 출발</p>
+              <button class="buy" onclick="addCart('아이 안심 친환경 장판 6mm')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card up" data-category="gym">
+          <button class="heart" onclick="wish(this)">♥</button>
+          <div class="photo-box"><div class="photo taekwondo"></div></div>
+          <div class="body">
+            <p class="cat">도장 · 학원</p>
+            <h3>태권도 퍼즐 매트 25mm (홍청)</h3>
+            <p class="benefit">끼워 맞추기만 하면 끝. 한 장씩 빼서 세척할 수 있습니다.</p>
+            <p class="stars"><b>★★★★☆</b> 4.7 · 후기 431</p>
+            <div class="price-row">
+              <p class="old-price">32,000원</p>
+              <p class="price"><span class="sale"></span>23,900원 <span class="per">/ ㎡</span></p>
+              <p class="ship">무료배송 · 오늘 출발</p>
+              <button class="buy" onclick="addCart('태권도 퍼즐 매트 25mm (홍청)')">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 찾는 상품이 없을 때 -->
+      <p class="no-result" id="noResult">
+        찾으시는 상품이 없습니다.<br>
+        다른 이름으로 검색해 보시거나 <a href="#quote" style="color:var(--gold);">무료 실측</a>을 신청해 주세요.
+      </p>
+
     </div>
+  </section>
 
-    <div class="card" data-category="gym">
-      <button class="heart" onclick="wish(this)">♥</button>
-      <div class="photo taekwondo"></div>
-      <h3>태권도 퍼즐 매트 (홍청)</h3>
-      <p class="old-price">100,000원</p>
-      <p class="price">80,000원</p>
-      <button onclick="addCart('태권도 퍼즐 매트 (홍청)')">장바구니 담기</button>
+  <!-- ===== 5. 이런 고민 있으셨죠 ===== -->
+  <section class="worry">
+    <div class="wrap">
+      <div class="sec-head up">
+        <span class="kicker">Why 이안애</span>
+        <hr class="rule">
+        <h2>이런 고민, 한 번쯤 하셨죠</h2>
+        <p>바닥 하나 바꾸는 게 왜 이렇게 번거로울까 — 그 부분부터 없앴습니다.</p>
+      </div>
+      <div class="grid">
+        <div class="item up">
+          <p class="q">아랫집에서<br>또 올라오면 어쩌죠</p>
+          <div class="arrow">▼</div>
+          <p class="a">소재와 두께부터 같이 정합니다.<br><b>15mm 이상 고밀도</b>면 뛰는 소리까지 확 줄어듭니다.</p>
+        </div>
+        <div class="item up">
+          <p class="q">가구는 누가<br>다 옮기나요</p>
+          <div class="arrow">▼</div>
+          <p class="a">저희가 옮기고 제자리에 놔드립니다.<br><b>추가 비용은 없습니다.</b></p>
+        </div>
+        <div class="item up">
+          <p class="q">견적이 얼마나<br>나올지 무서워요</p>
+          <div class="arrow">▼</div>
+          <p class="a">재보고 견적서부터 드립니다.<br><b>보시고 안 하셔도 0원</b>입니다.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-  </div>
+  <!-- ===== 6. 후기 ===== -->
+  <section class="review" id="review">
+    <div class="wrap">
+      <div class="sec-head up">
+        <span class="kicker">Real Review</span>
+        <hr class="rule">
+        <h2>먼저 바꾸신 분들의 이야기</h2>
+        <p>시공 후에 직접 남겨주신 후기입니다.</p>
+      </div>
+      <div class="grid">
+        <div class="item up">
+          <div class="st">★★★★★</div>
+          <p class="txt">밤 9시만 되면 애들 뛰지 말라고 소리치던 게 일이었는데, 매트 깔고는 그럴 일이 없어졌어요. 진작 할 걸 그랬습니다.</p>
+          <p class="who"><b>김○○ 님</b> · 서울 강동구 · EVA 층간소음 매트</p>
+        </div>
+        <div class="item up">
+          <div class="st">★★★★★</div>
+          <p class="txt">헤링본 깔고 나니 같은 거실이 맞나 싶어요. 가구도 다 옮겨주시고, 끝나고 청소까지 해주셔서 손 댈 게 없었습니다.</p>
+          <p class="who"><b>이○○ 님</b> · 경기 용인시 · 오크 헤링본 강마루</p>
+        </div>
+        <div class="item up">
+          <div class="st">★★★★★</div>
+          <p class="txt">아이가 이제 막 걷기 시작해서 자꾸 넘어지는데, 장판 바꾸고 나서는 넘어져도 크게 울지 않네요. 냄새도 안 났어요.</p>
+          <p class="who"><b>박○○ 님</b> · 인천 연수구 · 아이 안심 친환경 장판</p>
+        </div>
+      </div>
+      <p class="note">※ 위 후기와 별점·후기 수는 화면 구성을 보여드리기 위한 예시입니다. 실제 받으신 후기로 바꿔서 사용하세요.</p>
+    </div>
+  </section>
 
-  <!-- 찾는 상품이 없을 때 나오는 안내 -->
-  <p class="no-result" id="noResult">
-    찾으시는 상품이 없습니다.<br>
-    다른 이름으로 검색해 보세요.
-  </p>
-  </div>
-
-  <!-- 맨 아래: 연락처 -->
-  <footer>
+  <!-- ===== 7. 무료 실측 신청 ===== -->
+  <section class="quote" id="quote">
+    <p class="kicker">FREE MEASUREMENT</p>
+    <h2>재보는 건 공짜입니다</h2>
     <p>
-      <strong>이안애(E-安愛)</strong> &nbsp;|&nbsp; 대표: 변성천<br>
-      전화: 1588-0000 (평일 09:00 ~ 18:00)<br>
-      이메일: help@ianae.co.kr<br>
+      연락처만 남겨주시면 하루 안에 전화드립니다.<br>
+      방문해서 재고, 견적서 드리고, 결정은 그 다음에 하세요.
+    </p>
+    <form class="form" onsubmit="sendQuote(event)">
+      <input type="text" id="qName" placeholder="성함" required>
+      <input type="tel"  id="qTel"  placeholder="연락처 (010-0000-0000)" required>
+      <select id="qType">
+        <option value="주거용 바닥재">주거용 바닥재</option>
+        <option value="층간소음 매트">층간소음 매트</option>
+        <option value="아이 방 장판">아이 방 장판</option>
+        <option value="체육관 · 도장">체육관 · 도장</option>
+      </select>
+      <input type="text" class="full" id="qArea" placeholder="시공하실 곳과 평수 (예: 강남구 아파트 거실 18평)">
+      <button type="submit" class="btn btn-gold full">무료 실측 신청하기</button>
+    </form>
+  </section>
+
+  <!-- ===== 8. 자주 묻는 질문 ===== -->
+  <section class="faq">
+    <div class="wrap">
+      <div class="sec-head up">
+        <span class="kicker">FAQ</span>
+        <hr class="rule">
+        <h2>자주 묻는 질문</h2>
+      </div>
+      <div class="list">
+
+        <div class="qa">
+          <button onclick="toggleFaq(this)">시공은 며칠이나 걸리나요?</button>
+          <div class="ans">
+            30평 아파트 거실 기준으로 보통 <b>이틀</b>입니다.
+            첫날 기존 바닥을 걷어내고 수평을 잡고, 둘째 날 새 자재를 깝니다.
+            매트나 장판만 교체하시는 경우는 <b>하루</b>면 끝납니다.
+          </div>
+        </div>
+
+        <div class="qa">
+          <button onclick="toggleFaq(this)">시공하는 동안 집을 비워야 하나요?</button>
+          <div class="ans">
+            비우지 않으셔도 됩니다. 다만 작업하는 방은 잠시 비워주셔야 해서,
+            방을 나눠가며 순서대로 진행합니다. 어린 아이나 어르신이 계시면 미리 말씀해 주세요.
+          </div>
+        </div>
+
+        <div class="qa">
+          <button onclick="toggleFaq(this)">냄새가 나지는 않나요?</button>
+          <div class="ans">
+            저방출 등급 자재만 쓰기 때문에 시공 직후에도 냄새가 거의 없습니다.
+            그래도 하루 정도는 창문을 열어 환기해 주시는 걸 권해드립니다.
+          </div>
+        </div>
+
+        <div class="qa">
+          <button onclick="toggleFaq(this)">견적 받고 안 하면 비용이 드나요?</button>
+          <div class="ans">
+            <b>한 푼도 들지 않습니다.</b> 방문 실측과 견적서는 무료입니다.
+            보시고 다른 곳과 비교하신 뒤에 결정하셔도 괜찮습니다.
+          </div>
+        </div>
+
+        <div class="qa">
+          <button onclick="toggleFaq(this)">층간소음 매트는 몇 mm를 골라야 하나요?</button>
+          <div class="ans">
+            걷는 소리 정도면 <b>10mm</b>, 아이가 뛰는 소리까지 잡으시려면 <b>15mm 이상</b>,
+            기구 운동을 하신다면 <b>20mm 이상</b>을 권합니다.
+            가격만 보고 얇은 걸 고르시면 효과가 거의 없습니다.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 맨 아래 연락처 ===== -->
+  <footer class="site">
+    <p class="fname">이안애 E-安愛</p>
+    <p style="margin:0; font-size:13px; letter-spacing:0.16em; color:var(--gold-soft);">집 안에 편안함을 깔다</p>
+    <hr class="fline">
+    <p style="margin:0;">
+      대표: 변성천 &nbsp;|&nbsp; 주거용 · 체육관용 바닥재 전문<br>
+      전화: <a href="tel:15880000">1588-0000</a> (평일 09:00 ~ 18:00)<br>
+      이메일: <a href="mailto:help@ianae.co.kr">help@ianae.co.kr</a><br>
       주소: 서울특별시 강남구 테헤란로 100
     </p>
-    <p>&copy; 2026 이안애(E-安愛). All rights reserved.</p>
+    <p class="copy">&copy; 2026 이안애(E-安愛). All rights reserved.</p>
   </footer>
 
+  <!-- 오른쪽 아래 떠 있는 전화 버튼 -->
+  <a href="tel:15880000" class="float-call"><span class="ring">☎</span> 바로 상담 1588-0000</a>
+
 <script>
-  // 배너 버튼을 누르면 알림창이 뜹니다
-  function showEvent() {
-    alert("신규회원 10% 할인 쿠폰이 발급되었습니다!");
-  }
-
-  // 상품 버튼을 누르면 알림창이 뜹니다
-  function addCart(name) {
-    alert(name + " 상품을 장바구니에 담았습니다!");
-  }
-
-  // 할인율을 자동으로 계산해서 가격 앞에 빨간색으로 붙입니다
+  /* =======================================================
+     1. 할인율을 자동으로 계산해서 가격 앞에 붙입니다
+     ======================================================= */
   function showDiscount() {
     var cards = document.querySelectorAll(".card");
 
     for (var i = 0; i < cards.length; i++) {
-      var oldBox = cards[i].querySelector(".old-price");
-      var newBox = cards[i].querySelector(".price");
+      var oldBox  = cards[i].querySelector(".old-price");
+      var newBox  = cards[i].querySelector(".price");
+      var saleBox = cards[i].querySelector(".sale");
+      if (!oldBox || !newBox || !saleBox) continue;
 
-      // 글자에서 숫자만 뽑아냅니다 ("100,000원" -> 100000)
+      // 글자에서 숫자만 뽑아냅니다 ("39,000원" -> 39000)
       var oldPrice = Number(oldBox.innerText.replace(/[^0-9]/g, ""));
       var newPrice = Number(newBox.innerText.replace(/[^0-9]/g, ""));
 
       // 할인율 = (할인전 - 판매가) / 할인전 x 100
       var rate = Math.round((oldPrice - newPrice) / oldPrice * 100);
-
-      newBox.innerHTML = '<span class="sale">' + rate + '%</span> ' + newBox.innerText;
+      saleBox.innerText = rate + "%";
     }
   }
-
-  // 페이지가 열리면 바로 실행합니다
   showDiscount();
 
-  // 카테고리 버튼을 누르면 그 종류의 상품만 보여줍니다
+  /* =======================================================
+     2. 오늘의 특가 — 자정까지 남은 시간
+     ======================================================= */
+  function tick() {
+    var now = new Date();
+    var end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    var left = Math.floor((end - now) / 1000);
+
+    var h = Math.floor(left / 3600);
+    var m = Math.floor((left % 3600) / 60);
+    var s = left % 60;
+
+    document.getElementById("hh").innerText = ("0" + h).slice(-2);
+    document.getElementById("mm").innerText = ("0" + m).slice(-2);
+    document.getElementById("ss").innerText = ("0" + s).slice(-2);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* =======================================================
+     3. 카테고리 고르기
+     ======================================================= */
   function showCategory(type, btn) {
-    // 카테고리를 누르면 검색창은 비웁니다
     document.getElementById("searchBox").value = "";
     document.getElementById("noResult").style.display = "none";
 
     var cards = document.querySelectorAll(".card");
-
     for (var i = 0; i < cards.length; i++) {
       if (type === "all" || cards[i].dataset.category === type) {
-        cards[i].style.display = "block";   // 보이기
+        cards[i].style.display = "flex";
       } else {
-        cards[i].style.display = "none";    // 숨기기
+        cards[i].style.display = "none";
       }
     }
 
-    // 눌린 버튼만 초록색으로 칠하기
+    // 눌린 버튼만 진하게 칠하기
     var btns = document.querySelectorAll(".category button");
-    for (var j = 0; j < btns.length; j++) {
-      btns[j].classList.remove("on");
+    for (var j = 0; j < btns.length; j++) btns[j].classList.remove("on");
+
+    if (btn) {
+      btn.classList.add("on");
+    } else {
+      // 위 메뉴에서 넘어온 경우: 같은 종류의 버튼을 찾아서 칠합니다
+      var want = (type === "home") ? 1 : (type === "gym") ? 2 : 0;
+      btns[want].classList.add("on");
     }
-    btn.classList.add("on");
   }
 
-  // 시공문의 버튼
-  function askBuild() {
-    alert("시공 문의는 1588-0000 으로 전화 주세요!");
-  }
-
-  // 하트를 누르면 찜하기, 다시 누르면 해제됩니다
-  function wish(btn) {
-    btn.classList.toggle("on");   // "on" 을 붙였다 뗐다 합니다
-    countWish();
-  }
-
-  // 찜한 개수를 맨 위에 표시합니다
-  function countWish() {
-    var n = document.querySelectorAll(".heart.on").length;
-    document.getElementById("wishCount").innerText = "찜한 상품 " + n + "개";
-  }
-
-  // 검색창에 글자를 칠 때마다 실행됩니다
+  /* =======================================================
+     4. 검색
+     ======================================================= */
   function searchProduct() {
     var word = document.getElementById("searchBox").value.trim();
     var cards = document.querySelectorAll(".card");
-    var found = 0;   // 찾은 상품 개수
+    var found = 0;
 
     for (var i = 0; i < cards.length; i++) {
       var name = cards[i].querySelector("h3").innerText;
-
-      // 상품 이름에 그 글자가 들어 있으면 보이기
       if (name.indexOf(word) !== -1) {
-        cards[i].style.display = "block";
+        cards[i].style.display = "flex";
         found++;
       } else {
         cards[i].style.display = "none";
       }
     }
 
-    // 하나도 못 찾으면 안내 문구를 보여줍니다
-    if (found === 0) {
-      document.getElementById("noResult").style.display = "block";
-    } else {
-      document.getElementById("noResult").style.display = "none";
-    }
+    document.getElementById("noResult").style.display = (found === 0) ? "block" : "none";
 
-    // 검색하면 카테고리는 '전체상품'으로 돌려놓습니다
+    // 검색하면 카테고리는 '전체상품'으로 되돌립니다
     var btns = document.querySelectorAll(".category button");
-    for (var j = 0; j < btns.length; j++) {
-      btns[j].classList.remove("on");
-    }
+    for (var j = 0; j < btns.length; j++) btns[j].classList.remove("on");
     btns[0].classList.add("on");
   }
+
+  /* =======================================================
+     5. 찜하기 / 장바구니
+     ======================================================= */
+  var cart = 0;
+
+  function wish(btn) {
+    btn.classList.toggle("on");
+    var n = document.querySelectorAll(".heart.on").length;
+    document.getElementById("wishCount").innerHTML = "찜한 상품 <b>" + n + "</b>개";
+  }
+
+  function addCart(name) {
+    cart++;
+    document.getElementById("cartCount").innerHTML = "장바구니 <b>" + cart + "</b>개";
+    alert(name + "\n\n장바구니에 담았습니다.\n신규회원은 결제 시 10% 더 할인됩니다.");
+  }
+
+  /* =======================================================
+     6. 무료 실측 신청
+     ======================================================= */
+  function sendQuote(e) {
+    e.preventDefault();
+    var name = document.getElementById("qName").value;
+    var tel  = document.getElementById("qTel").value;
+    var type = document.getElementById("qType").value;
+
+    alert(name + "님, 실측 신청이 접수되었습니다.\n\n"
+        + "· 연락처: " + tel + "\n"
+        + "· 상담 종류: " + type + "\n\n"
+        + "하루 안에 1588-0000 으로 전화드리겠습니다.");
+    e.target.reset();
+  }
+
+  /* =======================================================
+     7. 자주 묻는 질문 펼치기
+     ======================================================= */
+  function toggleFaq(btn) {
+    btn.parentElement.classList.toggle("open");
+  }
+
+  /* =======================================================
+     8. 화면에 들어오면 살짝 떠오르게
+     ======================================================= */
+  var watcher = new IntersectionObserver(function (items) {
+    items.forEach(function (it) {
+      if (it.isIntersecting) {
+        it.target.classList.add("shown");
+        watcher.unobserve(it.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".up").forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 0.09 + "s";
+    watcher.observe(el);
+  });
 </script>
 
 </body>
