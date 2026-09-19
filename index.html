@@ -510,6 +510,177 @@
   .up.shown { opacity: 1; transform: none; }
 
   /* =======================================================
+     장바구니 목록 (오른쪽에서 밀려 나옵니다)
+     ======================================================= */
+
+  /* 맨 위 '장바구니 0개'를 누를 수 있게 만듭니다 */
+  .counters .open-cart { cursor: pointer; transition: border-color 0.2s ease; }
+  .counters .open-cart:hover { border-color: var(--gold); }
+
+  /* 뒤를 덮는 검은 막 */
+  .cart-back {
+    position: fixed; inset: 0;
+    z-index: 100;
+    background: rgba(24,28,21,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .cart-back.open { opacity: 1; visibility: visible; }
+
+  /* 모달 창 (화면 한가운데에 뜹니다) */
+  .cart-panel {
+    position: fixed;
+    top: 50%; left: 50%;
+    z-index: 101;
+    width: 470px;
+    max-width: calc(100vw - 36px);
+    max-height: 82vh;
+    background: var(--cream);
+    border-radius: 4px;
+    box-shadow: var(--shadow-l);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* 닫혀 있을 때: 안 보이고 살짝 작게 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.94);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  }
+  /* 열릴 때: 제자리 크기로 떠오릅니다 */
+  .cart-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* 모달 맨 위 */
+  .cart-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 26px;
+    background: var(--ink);
+  }
+  .cart-head h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 21px;
+    letter-spacing: 0.04em;
+  }
+  .cart-head .x {
+    background: none;
+    border: none;
+    color: #b6b2a7;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+  }
+  .cart-head .x:hover { color: #fff; }
+
+  /* 담긴 상품 줄들 */
+  .cart-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 26px;
+  }
+
+  .cart-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cart-row .info { flex: 1; min-width: 0; }
+  .cart-row .name {
+    margin: 0 0 5px 0;
+    font-family: var(--serif);
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .cart-row .calc { margin: 0; font-size: 13px; color: #9a9a90; }
+  .cart-row .sum {
+    margin: 3px 0 0 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* 각 줄 오른쪽 빼기 버튼 */
+  .cart-row .minus {
+    flex-shrink: 0;
+    background: #fff;
+    color: var(--sale);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    border: 1px solid var(--line);
+    padding: 9px 16px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cart-row .minus:hover {
+    background: var(--sale);
+    border-color: var(--sale);
+    color: #fff;
+  }
+
+  /* 아무것도 없을 때 */
+  .cart-empty {
+    text-align: center;
+    padding: 70px 20px;
+    color: #a8a89e;
+    font-size: 15.5px;
+    line-height: 1.9;
+  }
+  .cart-empty .ico { font-size: 38px; margin-bottom: 14px; opacity: 0.45; }
+
+  /* 목록 창 맨 아래 (합계 + 주문) */
+  .cart-foot {
+    border-top: 1px solid var(--line);
+    background: #fff;
+    padding: 22px 26px 26px 26px;
+  }
+  .cart-foot .total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .cart-foot .total span { font-size: 15px; color: var(--ink-soft); }
+  .cart-foot .total b {
+    font-family: var(--serif);
+    font-size: 27px;
+    color: var(--ink);
+  }
+  .cart-foot .order {
+    width: 100%;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--sans);
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .cart-foot .order:hover { background: var(--olive); }
+  .cart-foot .order:disabled {
+    background: #d5d2cb;
+    cursor: not-allowed;
+  }
+
+  /* =======================================================
      화면이 좁을 때
      ======================================================= */
   @media (max-width: 960px) {
@@ -554,6 +725,19 @@
 
     .worry .item  { padding: 30px 22px; }
     .review .item { padding: 26px 22px; }
+
+    /* 장바구니 모달 */
+    .cart-panel { max-height: 86vh; }
+    .cart-head  { padding: 18px 20px; }
+    .cart-head h3 { font-size: 18px; }
+    .cart-list  { padding: 6px 20px; }
+    .cart-row   { padding: 16px 0; gap: 10px; }
+    .cart-row .name { font-size: 14.5px; }
+    .cart-row .minus { padding: 8px 13px; font-size: 13px; }
+    .cart-foot  { padding: 18px 20px 20px 20px; }
+    .cart-foot .total b { font-size: 23px; }
+    .cart-foot .order { padding: 14px; font-size: 15px; }
+    .cart-empty { padding: 50px 16px; font-size: 14.5px; }
     .form { grid-template-columns: 1fr; }
     .faq .qa button { font-size: 16px; padding: 20px 34px 20px 0; }
   }
@@ -573,7 +757,7 @@
     <p class="tagline">집 안에 편안함을 깔다</p>
     <div class="counters">
       <span id="wishCount">찜한 상품 <b>0</b>개</span>
-      <span id="cartCount">장바구니 <b>0</b>개</span>
+      <span class="open-cart" id="cartCount" onclick="openCart()">🛒 장바구니 <b>0</b>개 &nbsp;›</span>
     </div>
   </header>
 
@@ -681,7 +865,7 @@
       <!-- 별점과 후기 수는 예시입니다. 실제 숫자로 바꿔서 쓰세요. -->
       <div class="products">
 
-        <div class="card up" data-category="home">
+        <div class="card up" data-category="home" data-price="26900">
           <span class="badge gold">인기</span>
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo wood"></div></div>
@@ -694,12 +878,12 @@
               <p class="old-price">39,000원</p>
               <p class="price"><span class="sale"></span>26,900원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료배송 · 오늘 출발</p>
-              <button class="buy" onclick="addCart('EVA 고밀도 층간소음 매트 10mm')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
 
-        <div class="card up" data-category="home">
+        <div class="card up" data-category="home" data-price="47600">
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo rubber"></div></div>
           <div class="body">
@@ -711,12 +895,12 @@
               <p class="old-price">68,000원</p>
               <p class="price"><span class="sale"></span>47,600원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료배송 · 오늘 출발</p>
-              <button class="buy" onclick="addCart('TPE 프리미엄 홈짐 매트 15mm')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
 
-        <div class="card up" data-category="gym">
+        <div class="card up" data-category="gym" data-price="98000">
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo court"></div></div>
           <div class="body">
@@ -728,12 +912,12 @@
               <p class="old-price">125,000원</p>
               <p class="price"><span class="sale"></span>98,000원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료 실측 · 전문 시공</p>
-              <button class="buy" onclick="addCart('체육관용 PVC 탄성 바닥재 4.5mm')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
 
-        <div class="card up" data-category="home">
+        <div class="card up" data-category="home" data-price="62300">
           <span class="badge">BEST</span>
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo livingwood"></div></div>
@@ -746,12 +930,12 @@
               <p class="old-price">89,000원</p>
               <p class="price"><span class="sale"></span>62,300원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료 실측 · 시공비 포함</p>
-              <button class="buy" onclick="addCart('오크 헤링본 강마루 7.5mm')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
 
-        <div class="card up" data-category="home">
+        <div class="card up" data-category="home" data-price="37800">
           <span class="badge">BEST</span>
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo kids"></div></div>
@@ -764,12 +948,12 @@
               <p class="old-price">54,000원</p>
               <p class="price"><span class="sale"></span>37,800원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료배송 · 오늘 출발</p>
-              <button class="buy" onclick="addCart('아이 안심 친환경 장판 6mm')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
 
-        <div class="card up" data-category="gym">
+        <div class="card up" data-category="gym" data-price="23900">
           <button class="heart" onclick="wish(this)">♥</button>
           <div class="photo-box"><div class="photo taekwondo"></div></div>
           <div class="body">
@@ -781,7 +965,7 @@
               <p class="old-price">32,000원</p>
               <p class="price"><span class="sale"></span>23,900원 <span class="per">/ ㎡</span></p>
               <p class="ship">무료배송 · 오늘 출발</p>
-              <button class="buy" onclick="addCart('태권도 퍼즐 매트 25mm (홍청)')">장바구니 담기</button>
+              <button class="buy" onclick="addCart(this)">장바구니 담기</button>
             </div>
           </div>
         </div>
@@ -951,6 +1135,27 @@
   <!-- 오른쪽 아래 떠 있는 전화 버튼 -->
   <a href="tel:15880000" class="float-call"><span class="ring">☎</span> 바로 상담 1588-0000</a>
 
+  <!-- ===== 장바구니 목록 (맨 위 '장바구니 O개'를 누르면 열립니다) ===== -->
+  <div class="cart-back" id="cartBack" onclick="closeCart()"></div>
+
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-head">
+      <h3>장바구니</h3>
+      <button class="x" onclick="closeCart()">&times;</button>
+    </div>
+
+    <!-- 담긴 상품 줄이 여기에 그려집니다 -->
+    <div class="cart-list" id="cartList"></div>
+
+    <div class="cart-foot">
+      <div class="total">
+        <span>합계</span>
+        <b id="cartTotal">0원</b>
+      </div>
+      <button class="order" id="cartOrder" onclick="order()">주문하기</button>
+    </div>
+  </aside>
+
 <script>
   /* =======================================================
      1. 할인율을 자동으로 계산해서 가격 앞에 붙입니다
@@ -1052,19 +1257,159 @@
   /* =======================================================
      5. 찜하기 / 장바구니
      ======================================================= */
-  var cart = 0;
+  // 장바구니에 담긴 상품들이 여기에 쌓입니다
+  // 한 칸에 { 이름, 가격, 개수 } 가 들어갑니다
+  var cart = [];
 
+  // 하트를 직접 눌렀을 때 (찜하기)
   function wish(btn) {
     btn.classList.toggle("on");
+    countWish();
+  }
+
+  // 빨간 하트가 몇 개인지 세어서 맨 위에 표시합니다
+  function countWish() {
     var n = document.querySelectorAll(".heart.on").length;
     document.getElementById("wishCount").innerHTML = "찜한 상품 <b>" + n + "</b>개";
   }
 
-  function addCart(name) {
-    cart++;
-    document.getElementById("cartCount").innerHTML = "장바구니 <b>" + cart + "</b>개";
-    alert(name + "\n\n장바구니에 담았습니다.\n신규회원은 결제 시 10% 더 할인됩니다.");
+  /* ----- 담기 버튼을 눌렀을 때 ----- */
+  function addCart(btn) {
+    var card  = btn.closest(".card");
+    var name  = card.querySelector("h3").innerText;
+    var price = Number(card.dataset.price);
+
+    // 이미 담은 상품이면 개수만 1 올립니다
+    var found = null;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name === name) { found = cart[i]; break; }
+    }
+
+    if (found) {
+      found.qty++;
+    } else {
+      cart.push({ name: name, price: price, qty: 1 });
+    }
+
+    // 담으면 그 상품의 하트가 빨간색이 됩니다
+    card.querySelector(".heart").classList.add("on");
+    countWish();
+
+    drawCart();
+    openCart();   // 담자마자 장바구니 목록을 열어서 보여줍니다
   }
+
+  /* ----- 각 줄 오른쪽 '빼기' 버튼을 눌렀을 때 ----- */
+  // 개수를 1 줄이고, 0이 되면 그 줄을 없앱니다
+  function removeCart(name) {
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name !== name) continue;
+
+      cart[i].qty--;
+
+      if (cart[i].qty <= 0) {
+        cart.splice(i, 1);          // 줄 없애기
+        offHeart(name);             // 하트도 원래 색으로
+      }
+      break;
+    }
+    drawCart();
+  }
+
+  // 그 상품 카드의 하트를 흐린 색으로 되돌립니다
+  function offHeart(name) {
+    var cards = document.querySelectorAll(".card");
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].querySelector("h3").innerText === name) {
+        cards[i].querySelector(".heart").classList.remove("on");
+        break;
+      }
+    }
+    countWish();
+  }
+
+  /* ----- 장바구니 목록을 화면에 그립니다 ----- */
+  function drawCart() {
+    var list  = document.getElementById("cartList");
+    var total = 0;
+    var count = 0;
+
+    // 담긴 게 하나도 없을 때
+    if (cart.length === 0) {
+      list.innerHTML =
+        '<div class="cart-empty">' +
+          '<div class="ico">🛒</div>' +
+          '담긴 상품이 없습니다' +
+        '</div>';
+    } else {
+      var html = "";
+
+      for (var i = 0; i < cart.length; i++) {
+        var it  = cart[i];
+        var sum = it.price * it.qty;
+
+        total += sum;
+        count += it.qty;
+
+        html +=
+          '<div class="cart-row">' +
+            '<div class="info">' +
+              '<p class="name">' + it.name + '</p>' +
+              '<p class="calc">' + won(it.price) + ' × ' + it.qty + '개</p>' +
+              '<p class="sum">' + won(sum) + '</p>' +
+            '</div>' +
+            '<button class="minus" onclick="removeCart(\'' + it.name.replace(/'/g, "\\'") + '\')">빼기</button>' +
+          '</div>';
+      }
+
+      list.innerHTML = html;
+    }
+
+    // 맨 위 개수, 합계, 주문 버튼 상태를 맞춥니다
+    document.getElementById("cartCount").innerHTML = "🛒 장바구니 <b>" + count + "</b>개 &nbsp;›";
+    document.getElementById("cartTotal").innerText = won(total);
+    document.getElementById("cartOrder").disabled  = (cart.length === 0);
+  }
+
+  // 숫자를 "26,900원" 모양으로 바꿉니다
+  function won(n) {
+    return n.toLocaleString("ko-KR") + "원";
+  }
+
+  /* ----- 목록 창 열기 / 닫기 ----- */
+  function openCart() {
+    document.getElementById("cartPanel").classList.add("open");
+    document.getElementById("cartBack").classList.add("open");
+  }
+
+  function closeCart() {
+    document.getElementById("cartPanel").classList.remove("open");
+    document.getElementById("cartBack").classList.remove("open");
+  }
+
+  // 키보드 ESC 를 누르면 모달이 닫힙니다
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeCart();
+  });
+
+  // 주문하기 버튼
+  function order() {
+    if (cart.length === 0) return;
+
+    var count = 0;
+    var total = 0;
+    for (var i = 0; i < cart.length; i++) {
+      count += cart[i].qty;
+      total += cart[i].price * cart[i].qty;
+    }
+
+    alert("총 " + count + "개 / " + won(total) + "\n\n"
+        + "주문을 받았습니다.\n신규회원은 결제 시 10% 더 할인됩니다.\n\n"
+        + "※ 샘플 화면이라 실제로 주문되지는 않습니다.");
+  }
+
+  // 페이지가 열리면 빈 장바구니를 한 번 그려둡니다
+  drawCart();
 
   /* =======================================================
      6. 무료 실측 신청
