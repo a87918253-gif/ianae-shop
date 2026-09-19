@@ -2048,6 +2048,10 @@
                  + '</p>';
       }
 
+      // 할인 전 가격이 판매가보다 클 때만 할인으로 봅니다
+      // (같거나 비어 있으면 취소선과 할인율을 아예 넣지 않습니다)
+      var onSale = p.old_price && Number(p.old_price) > Number(p.price);
+
       html +=
         '<div class="card up" data-category="' + p.category + '" data-price="' + p.price + '">'
       +   badge
@@ -2061,8 +2065,8 @@
       +     (p.benefit ? '<p class="benefit">' + p.benefit + '</p>' : "")
       +     starLine
       +     '<div class="price-row">'
-      +       '<p class="old-price">' + Number(p.old_price).toLocaleString("ko-KR") + '원</p>'
-      +       '<p class="price"><span class="sale"></span>'
+      +       (onSale ? '<p class="old-price">' + Number(p.old_price).toLocaleString("ko-KR") + '원</p>' : "")
+      +       '<p class="price">' + (onSale ? '<span class="sale"></span>' : "")
       +         Number(p.price).toLocaleString("ko-KR") + '원 '
       +         '<span class="per">/ ' + (p.unit || "㎡") + '</span></p>'
       +       (p.ship ? '<p class="ship">' + p.ship + '</p>' : "")
