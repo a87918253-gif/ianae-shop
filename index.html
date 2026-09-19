@@ -1974,10 +1974,113 @@
     });
   }, { threshold: 0.12 });
 
-  document.querySelectorAll(".up").forEach(function (el, i) {
-    el.style.transitionDelay = (i % 3) * 0.09 + "s";
-    watcher.observe(el);
-  });
+  // 상품을 다시 그린 뒤에도 부를 수 있게 따로 빼두었습니다
+  function observeUp() {
+    document.querySelectorAll(".up:not(.shown)").forEach(function (el, i) {
+      el.style.transitionDelay = (i % 3) * 0.09 + "s";
+      watcher.observe(el);
+    });
+  }
+
+  observeUp();
+
+  /* =======================================================
+     9. Supabase 에서 상품을 불러옵니다
+     - 상품이 있으면 그것으로 화면을 다시 그립니다
+     - 없거나 연결이 안 되면 위에 적혀 있는 상품을 그대로 씁니다
+       (그래서 어느 쪽이든 화면이 비지 않습니다)
+     ======================================================= */
+  async function loadProducts() {
+    if (!window.db) return;
+
+    try {
+      const { data, error } = await db
+        .from("products")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order");
+
+      // 표가 없거나 비어 있으면 건드리지 않습니다
+      if (error || !data || data.length === 0) {
+        console.log("[상품] Supabase 에 상품이 없어 페이지에 적힌 상품을 씁니다.");
+        return;
+      }
+
+      drawProducts(data);
+      console.log("[상품] Supabase 에서 " + data.length + "개를 불러왔습니다.");
+
+    } catch (e) {
+      console.log("[상품] 불러오지 못해 페이지에 적힌 상품을 씁니다.");
+    }
+  }
+
+  /* ----- 별점 숫자를 별 모양으로 바꿉니다 (4.7 -> ★★★★☆) ----- */
+  function stars(rating) {
+    var full = Math.floor(Number(rating) + 0.25);   // 4.75 이상이면 별 5개
+    if (full > 5) full = 5;
+    if (full < 0) full = 0;
+
+    var s = "";
+    for (var i = 0; i < full; i++)     s += "★";
+    for (var j = full; j < 5; j++)     s += "☆";
+    return s;
+  }
+
+  /* ----- 불러온 상품으로 카드를 다시 그립니다 ----- */
+  function drawProducts(list) {
+    var html = "";
+
+    for (var i = 0; i < list.length; i++) {
+      var p = list[i];
+
+      // 배지 (BEST 는 먹색, 인기 는 금색)
+      var badge = "";
+      if (p.badge) {
+        var cls = (p.badge === "BEST") ? "badge" : "badge gold";
+        badge = '<span class="' + cls + '">' + p.badge + '</span>';
+      }
+
+      // 별점 줄 (별점이 없으면 줄 자체를 넣지 않습니다)
+      var starLine = "";
+      if (p.rating) {
+        starLine = '<p class="stars"><b>' + stars(p.rating) + '</b> ' + p.rating
+                 + (p.review_cnt ? ' · 후기 ' + Number(p.review_cnt).toLocaleString("ko-KR") : "")
+                 + '</p>';
+      }
+
+      html +=
+        '<div class="card up" data-category="' + p.category + '" data-price="' + p.price + '">'
+      +   badge
+      +   '<button class="heart" onclick="wish(this)">♥</button>'
+      +   '<div class="photo-box">'
+      +     '<div class="photo" style="background-image:url(\'' + p.photo_url + '\')"></div>'
+      +   '</div>'
+      +   '<div class="body">'
+      +     (p.cat_label ? '<p class="cat">' + p.cat_label + '</p>' : "")
+      +     '<h3>' + p.name + '</h3>'
+      +     (p.benefit ? '<p class="benefit">' + p.benefit + '</p>' : "")
+      +     starLine
+      +     '<div class="price-row">'
+      +       '<p class="old-price">' + Number(p.old_price).toLocaleString("ko-KR") + '원</p>'
+      +       '<p class="price"><span class="sale"></span>'
+      +         Number(p.price).toLocaleString("ko-KR") + '원 '
+      +         '<span class="per">/ ' + (p.unit || "㎡") + '</span></p>'
+      +       (p.ship ? '<p class="ship">' + p.ship + '</p>' : "")
+      +       '<button class="buy" onclick="addCart(this)">장바구니 담기</button>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>';
+    }
+
+    document.querySelector(".products").innerHTML = html;
+
+    // 새로 그린 카드에도 기존 기능을 다시 걸어줍니다
+    showDiscount();   // 할인율 계산해서 가격 앞에 붙이기
+    onHearts();       // 장바구니에 담긴 상품의 하트 다시 켜기
+    observeUp();      // 스크롤하면 떠오르는 효과
+  }
+
+  loadProducts();
 </script>
 
 </body>
