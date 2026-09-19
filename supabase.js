@@ -75,3 +75,75 @@ async function checkDB() {
 
 // 페이지가 열리면 한 번 확인해서 콘솔에 남겨둡니다
 if (db) checkDB();
+
+/* =======================================================
+   머리말에 로그인 상태를 그립니다
+   - 페이지에 <div class="auth" id="authBox"></div> 가 있으면
+     그 안에 자동으로 채워집니다.
+   - 로그인 전: 로그인 / 회원가입 단추
+   - 로그인 후: 이름 / 로그아웃 단추
+   ======================================================= */
+async function drawAuth() {
+  var box = document.getElementById("authBox");
+  if (!box) return;          // 이 칸이 없는 페이지는 건너뜁니다
+
+  // 연결이 안 됐으면 로그인 단추만 보여줍니다
+  if (!db) {
+    box.innerHTML = '<a class="pill" href="login.html">로그인</a>'
+                  + '<a class="pill" href="join.html">회원가입</a>';
+    return;
+  }
+
+  var user = null;
+  try {
+    const { data } = await db.auth.getSession();
+    if (data && data.session) user = data.session.user;
+  } catch (e) {
+    // 확인하지 못하면 로그인 전으로 둡니다
+  }
+
+  if (user) {
+    // 가입할 때 넣은 이름이 있으면 그 이름을, 없으면 '회원'으로 부릅니다
+    var name = (user.user_metadata && user.user_metadata.name)
+             ? user.user_metadata.name : "회원";
+
+    box.innerHTML = '<span class="pill me">' + name + '님</span>'
+                  + '<button class="pill out" onclick="siteLogout()">로그아웃</button>';
+  } else {
+    box.innerHTML = '<a class="pill" href="login.html">로그인</a>'
+                  + '<a class="pill" href="join.html">회원가입</a>';
+  }
+
+  // 메뉴 줄의 '회원가입' 도 로그인하면 감춥니다
+  // (이미 가입한 사람에게는 필요 없는 메뉴입니다)
+  hideJoinMenu(user ? true : false);
+}
+
+/* ----- 메뉴 줄의 회원가입을 감추거나 다시 보이게 합니다 ----- */
+function hideJoinMenu(hide) {
+  var links = document.querySelectorAll('nav.site a[href="join.html"]');
+
+  for (var i = 0; i < links.length; i++) {
+    // nav 의 글자는 inline-block 이라 display 를 직접 바꿔줍니다
+    links[i].style.display = hide ? "none" : "";
+  }
+}
+
+/* ----- 어느 페이지에서든 로그아웃할 수 있습니다 ----- */
+async function siteLogout() {
+  if (db) await db.auth.signOut();
+  drawAuth();                // 표시를 로그인 전으로 되돌립니다
+
+  // 로그인 페이지에 있었다면 그 화면도 함께 되돌립니다
+  if (typeof logOut === "function" && document.getElementById("signed")) {
+    document.getElementById("formArea").className = "form-area";
+    document.getElementById("signed").className   = "signed";
+  }
+}
+
+// 화면이 다 그려지면 로그인 상태를 표시합니다
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", drawAuth);
+} else {
+  drawAuth();
+}

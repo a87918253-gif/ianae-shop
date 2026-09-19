@@ -152,6 +152,7 @@
   <header class="site">
     <a href="index.html" class="logo">이안애 <span style="font-size:0.62em; color:var(--gold);">E-安愛</span></a>
     <p class="tagline">집 안에 편안함을 깔다</p>
+    <div class="auth" id="authBox"></div>
   </header>
 
   <!-- ===== 메뉴 ===== -->
@@ -348,6 +349,10 @@ EVA보다 무겁고 밀도가 높습니다.
 
   <!-- 오른쪽 아래 떠 있는 전화 버튼 -->
   <a href="tel:15880000" class="float-call"><span class="ring">☎</span> 바로 상담 1588-0000</a>
+
+<!-- Supabase 연결 (라이브러리 -> 설정 파일 순서) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 
 <script>
   // "글 전체 보기" 버튼을 누르면 본문을 펼치고 접습니다

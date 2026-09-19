@@ -155,6 +155,47 @@ header.site .tagline {
 }
 
 /* =======================================================
+   머리말 안 로그인 상태 표시
+   - 로그인 전: [로그인] [회원가입]
+   - 로그인 후: [홍길동님] [로그아웃]
+   ======================================================= */
+.auth {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.auth .pill {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 7px 16px;
+  border-radius: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.auth .pill:hover { border-color: var(--gold); color: var(--gold); }
+
+/* 로그인한 사람 이름 (누르는 곳이 아님) */
+.auth .pill.me {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  cursor: default;
+}
+.auth .pill.me:hover { border-color: var(--ink); color: #fff; }
+
+/* 로그아웃 */
+.auth .pill.out:hover { border-color: var(--sale); color: var(--sale); }
+
+/* =======================================================
    메뉴 (스크롤해도 위에 붙어 있음)
    ======================================================= */
 nav.site {

@@ -583,6 +583,48 @@
   .cart-head .x:hover { color: #fff; }
 
   /* =======================================================
+     오른쪽 아래 떠 있는 배경음악 버튼
+     (장바구니 버튼 바로 위에 붙습니다)
+     ======================================================= */
+  .float-music {
+    position: fixed;
+    right: 22px;
+    bottom: 150px;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: #fff;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    border: 1px solid var(--line);
+    padding: 13px 20px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow-m);
+    transition: all 0.25s ease;
+  }
+  .float-music:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+
+  /* 음악이 켜져 있을 때 */
+  .float-music.on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .float-music.on:hover { background: var(--olive); border-color: var(--olive); color: #fff; }
+
+  /* 음표가 켜져 있을 때 천천히 뜁니다 */
+  .float-music .note { font-size: 16px; line-height: 1; }
+  .float-music.on .note { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.88); }
+  }
+
+  /* =======================================================
      오른쪽 아래 떠 있는 장바구니 버튼
      (전화 상담 버튼 바로 위에 붙습니다)
      ======================================================= */
@@ -853,6 +895,16 @@
     .worry .item  { padding: 30px 22px; }
     .review .item { padding: 26px 22px; }
 
+    /* 떠 있는 음악 버튼 (장바구니 버튼 위로) */
+    .float-music {
+      right: 14px;
+      bottom: 124px;
+      padding: 11px 17px;
+      font-size: 13px;
+      gap: 7px;
+    }
+    .float-music .note { font-size: 15px; }
+
     /* 떠 있는 장바구니 버튼 (전화 버튼 위로) */
     .float-cart {
       right: 14px;
@@ -899,6 +951,10 @@
     <div class="counters">
       <span id="wishCount">찜한 상품 <b>0</b>개</span>
       <span class="open-cart" id="cartCount" onclick="openCart()">🛒 장바구니 <b>0</b>개 &nbsp;›</span>
+    </div>
+
+    <!-- 로그인 상태가 여기에 표시됩니다 -->
+    <div class="auth" id="authBox">
     </div>
   </header>
 
@@ -1272,6 +1328,21 @@
     </p>
     <p class="copy">&copy; 2026 이안애(E-安愛). All rights reserved.</p>
   </footer>
+
+  <!-- ===== 배경음악 =====
+       Satie 짐노페디 1번 (1888년 곡, 퍼블릭 도메인)
+       출처: 위키미디어 공용
+       다른 곡으로 바꾸시려면 아래 src 주소만 교체하시면 됩니다. -->
+  <audio id="bgm" loop preload="none">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/9/90/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg.mp3" type="audio/mpeg">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/9/90/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg" type="audio/ogg">
+  </audio>
+
+  <!-- 오른쪽 아래 떠 있는 배경음악 버튼 -->
+  <button class="float-music" id="musicBtn" onclick="toggleMusic()">
+    <span class="note">♪</span>
+    <span id="musicText">음악 켜기</span>
+  </button>
 
   <!-- 오른쪽 아래 떠 있는 장바구니 버튼 -->
   <button class="float-cart" onclick="openCart()">
@@ -1764,6 +1835,132 @@
   function toggleFaq(btn) {
     btn.parentElement.classList.toggle("open");
   }
+
+  /* =======================================================
+     배경음악 (Satie 짐노페디 1번)
+     - 상품 영역에 들어오면 조용히 켜집니다
+     - 오른쪽 아래 버튼으로 언제든 끄고 켤 수 있습니다
+     - 껐다는 사실을 기억해서, 다음에 와도 켜지지 않습니다
+     ======================================================= */
+  var bgm     = document.getElementById("bgm");
+  var musicOn = false;
+  var MUSIC_KEY = "ianae_music";     // 껐는지 켰는지를 저장하는 이름
+
+  // 소리 크기 (0 ~ 1). 배경음악이라 작게 잡았습니다.
+  var MUSIC_VOL = 0.22;
+
+  /* ----- 지난번에 끄셨는지 확인합니다 ----- */
+  function musicAllowed() {
+    try {
+      return localStorage.getItem(MUSIC_KEY) !== "off";
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function rememberMusic(on) {
+    try {
+      localStorage.setItem(MUSIC_KEY, on ? "on" : "off");
+    } catch (e) {
+      // 저장이 막혀 있어도 그냥 넘어갑니다
+    }
+  }
+
+  /* ----- 버튼 모양 바꾸기 ----- */
+  function drawMusicBtn() {
+    document.getElementById("musicBtn").className = musicOn ? "float-music on" : "float-music";
+    document.getElementById("musicText").innerText = musicOn ? "음악 끄기" : "음악 켜기";
+  }
+
+  /* ----- 소리를 천천히 올리고 내립니다 (갑자기 나오면 놀라니까) ----- */
+  function fadeTo(target, done) {
+    var step = (target - bgm.volume) / 20;
+    var n = 0;
+
+    var timer = setInterval(function () {
+      n++;
+      var v = bgm.volume + step;
+      bgm.volume = Math.min(1, Math.max(0, v));
+
+      if (n >= 20) {
+        clearInterval(timer);
+        bgm.volume = target;
+        if (done) done();
+      }
+    }, 40);
+  }
+
+  /* ----- 음악 켜기 ----- */
+  function playMusic() {
+    if (musicOn) return;
+
+    bgm.volume = 0;
+    var p = bgm.play();
+
+    // 브라우저가 소리를 막으면 play() 가 실패합니다.
+    // 그때는 화면을 한 번 누르실 때까지 기다립니다.
+    if (p && p.catch) {
+      p.then(function () {
+        musicOn = true;
+        drawMusicBtn();
+        fadeTo(MUSIC_VOL);
+      }).catch(function () {
+        waitForClick();
+      });
+    }
+  }
+
+  /* ----- 음악 끄기 ----- */
+  function stopMusic() {
+    if (!musicOn) return;
+
+    fadeTo(0, function () {
+      bgm.pause();
+      musicOn = false;
+      drawMusicBtn();
+    });
+  }
+
+  /* ----- 버튼을 눌렀을 때 ----- */
+  function toggleMusic() {
+    if (musicOn) {
+      stopMusic();
+      rememberMusic(false);
+    } else {
+      rememberMusic(true);
+      playMusic();
+    }
+  }
+
+  /* ----- 소리가 막혔을 때: 화면을 한 번 누르면 켭니다 ----- */
+  var waiting = false;
+
+  function waitForClick() {
+    if (waiting) return;
+    waiting = true;
+
+    function once() {
+      document.removeEventListener("click", once);
+      document.removeEventListener("touchstart", once);
+      waiting = false;
+
+      if (musicAllowed()) playMusic();
+    }
+
+    document.addEventListener("click", once);
+    document.addEventListener("touchstart", once);
+  }
+
+  /* ----- 상품 영역에 들어오면 켭니다 ----- */
+  var shopWatcher = new IntersectionObserver(function (items) {
+    items.forEach(function (it) {
+      if (it.isIntersecting && musicAllowed() && !musicOn) playMusic();
+    });
+  }, { threshold: 0.15 });
+
+  shopWatcher.observe(document.getElementById("shop"));
+
+  drawMusicBtn();
 
   /* =======================================================
      8. 화면에 들어오면 살짝 떠오르게
