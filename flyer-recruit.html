@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>현진실업 승무원 대모집 전단지 — A4</title>
+
+<!-- 글꼴 불러오기 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+  /* =======================================================
+     현진실업 승무원 모집 A4 전단지
+     - 종이 크기: 210mm x 297mm (A4 세로)
+     - 인쇄: 화면 오른쪽 위 [인쇄하기] 버튼 또는 Ctrl+P
+     - PDF 로 저장: 인쇄 창에서 '대상'을 'PDF로 저장' 선택
+     ======================================================= */
+
+  :root {
+    --ink:        #22261f;
+    --ink-soft:   #5a6155;
+    --cream:      #faf7f1;
+    --cream-2:    #f3ece1;
+    --line:       #e7ded0;
+    --gold:       #b08d57;
+    --gold-soft:  #d9c39b;
+    --olive:      #5c6b4c;
+    --sale:       #c0392b;
+
+    --serif: "Noto Serif KR", "나눔명조", serif;
+    --sans:  "Pretendard", "Noto Sans KR", "맑은 고딕", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #6b6b66;
+    font-family: var(--sans);
+    color: var(--ink-soft);
+    padding: 30px 20px 60px 20px;
+  }
+
+  /* ===== 종이 한 장 (A4) ===== */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    background: var(--cream);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* 인쇄할 때 배경색과 사진이 빠지지 않게 합니다 */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== 1. 맨 위 상호 ===== */
+  .top {
+    background: var(--ink);
+    color: #fff;
+    padding: 7mm 14mm 6mm 14mm;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .top .name {
+    font-family: var(--serif);
+    font-size: 25pt;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .top .tag {
+    margin: 2mm 0 0 0;
+    font-size: 9pt;
+    letter-spacing: 0.22em;
+    color: var(--gold-soft);
+  }
+  .top .right {
+    text-align: right;
+    font-size: 8.5pt;
+    line-height: 1.75;
+    color: #b6b2a7;
+  }
+  .top .right b { color: #fff; font-weight: 600; display: block; font-size: 9.5pt; }
+
+  /* ===== 2. 큰 제목 ===== */
+  .hero {
+    position: relative;
+    height: 66mm;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .hero .pic {
+    position: absolute; inset: 0;
+    background-image: url("https://images.pexels.com/photos/1544955/pexels-photo-1544955.jpeg?auto=compress&cs=tinysrgb&w=1600");
+    background-size: cover;
+    background-position: center;
+  }
+  .hero .veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+                rgba(18,21,16,0.62) 0%,
+                rgba(18,21,16,0.78) 100%);
+  }
+  .hero .txt {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 12mm;
+    color: #fff;
+  }
+  .hero .kicker {
+    font-size: 8pt;
+    letter-spacing: 0.3em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin: 0 0 3mm 0;
+  }
+  .hero h2 {
+    font-family: var(--serif);
+    font-size: 40pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 4mm 0;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+  }
+  .hero .sub {
+    font-size: 11pt;
+    line-height: 1.7;
+    margin: 0 0 5mm 0;
+    color: #efeadf;
+  }
+  /* 모집 부문 칩 */
+  .chips { display: flex; gap: 2mm; flex-wrap: wrap; justify-content: center; }
+  .chips span {
+    border: 1px solid rgba(217,195,155,0.6);
+    background: rgba(255,255,255,0.08);
+    color: var(--gold-soft);
+    font-size: 9.5pt;
+    font-weight: 600;
+    padding: 2mm 5mm;
+    border-radius: 30px;
+  }
+
+  /* ===== 3. 모집 부문 ===== */
+  .jobs { padding: 7mm 14mm 5mm 14mm; }
+
+  .sec-t { text-align: center; margin-bottom: 5mm; }
+  .sec-t .k {
+    font-size: 7.5pt;
+    letter-spacing: 0.26em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 2mm 0;
+  }
+  .sec-t h3 {
+    font-family: var(--serif);
+    font-size: 15pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+  .sec-t .line {
+    width: 12mm; height: 1px;
+    background: var(--gold);
+    border: 0;
+    margin: 2.5mm auto 0 auto;
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .job {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 4mm 4mm 5mm 4mm;
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .job .t {
+    display: inline-block;
+    background: var(--cream-2);
+    color: var(--gold);
+    font-size: 6.5pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 1mm 3mm;
+    border-radius: 20px;
+    margin-bottom: 2.5mm;
+  }
+  .job h4 {
+    font-family: var(--serif);
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 2mm 0;
+    line-height: 1.35;
+  }
+  .job p {
+    font-size: 8pt;
+    color: #8b9184;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ===== 4. 자격 / 회사 지원 ===== */
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    padding: 4mm 14mm 5mm 14mm;
+  }
+  .two .box {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 5mm 6mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .two .box.dark {
+    background: var(--cream-2);
+  }
+  .two .box .k {
+    font-size: 7pt;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 1.5mm 0;
+  }
+  .two .box h4 {
+    font-family: var(--serif);
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 3mm 0;
+  }
+  .two ul { list-style: none; margin: 0; padding: 0; }
+  .two li {
+    font-size: 9pt;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding: 2mm 0 2mm 5mm;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .two li::before {
+    content: "✓";
+    position: absolute;
+    left: 0; top: 2mm;
+    color: var(--olive);
+    font-weight: 800;
+  }
+  .two li b { color: var(--ink); font-weight: 700; }
+
+  /* ===== 5. 이런 분 환영 ===== */
+  .welcome {
+    margin: 0 14mm 5mm 14mm;
+    background: var(--ink);
+    color: #fff;
+    padding: 5mm 6mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .welcome .lb {
+    font-family: var(--serif);
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--gold-soft);
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+  .welcome .lb small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 7pt;
+    color: #8b887f;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  .welcome ul {
+    margin: 0; padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 6mm;
+    flex: 1;
+    justify-content: center;
+    font-size: 10pt;
+    color: #e3ded3;
+  }
+  .welcome li::before { content: "· "; color: var(--gold-soft); font-weight: 800; }
+
+  /* ===== 6. 지원 방법 3단계 ===== */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3mm;
+    padding: 0 14mm 6mm 14mm;
+  }
+  .step {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 4mm;
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .step .n {
+    font-family: var(--serif);
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--gold-soft);
+    line-height: 1;
+    margin-bottom: 2mm;
+  }
+  .step h5 {
+    font-family: var(--serif);
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 1.5mm 0;
+  }
+  .step p { font-size: 8pt; color: #8b9184; margin: 0; line-height: 1.6; }
+
+  /* ===== 7. 맨 아래 전화 ===== */
+  .cta {
+    margin-top: auto;
+    background: var(--ink);
+    color: #fff;
+    padding: 8mm 14mm 7mm 14mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cta .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8mm;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+  }
+  .cta .call .k {
+    font-size: 8pt;
+    letter-spacing: 0.26em;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin: 0 0 1.5mm 0;
+  }
+  .cta .call .num {
+    font-family: var(--serif);
+    font-size: 36pt;
+    font-weight: 700;
+    color: var(--gold-soft);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 0;
+  }
+  .cta .call .hrs {
+    font-size: 8.5pt;
+    color: #b6b2a7;
+    margin: 2.5mm 0 0 0;
+  }
+  .cta .now {
+    text-align: center;
+    border: 1px dashed var(--gold-soft);
+    padding: 4mm 6mm;
+    white-space: nowrap;
+  }
+  .cta .now .t {
+    font-size: 7.5pt;
+    letter-spacing: 0.2em;
+    color: var(--gold-soft);
+    margin: 0 0 1.5mm 0;
+  }
+  .cta .now .v {
+    font-family: var(--serif);
+    font-size: 16pt;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .cta .now .s { font-size: 7.5pt; color: #b6b2a7; margin: 1.5mm 0 0 0; }
+
+  .cta .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 5mm;
+    font-size: 8.5pt;
+    color: #a9a69e;
+    line-height: 1.8;
+  }
+  .cta .foot b { color: #fff; font-weight: 600; }
+  .cta .foot .web { text-align: right; font-size: 8pt; }
+  .cta .foot .web .site {
+    font-family: var(--serif);
+    font-size: 9.5pt;
+    color: var(--gold-soft);
+    display: block;
+    margin-bottom: 1mm;
+  }
+
+  /* ===== 화면에서만 보이는 인쇄 버튼 ===== */
+  .bar {
+    max-width: 210mm;
+    margin: 0 auto 14px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #e6e3dc;
+    font-size: 13px;
+  }
+  .bar button {
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .bar button:hover { background: #9a7a46; }
+
+  /* =======================================================
+     인쇄할 때 (Ctrl+P)
+     ======================================================= */
+  @page { size: A4 portrait; margin: 0; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; margin: 0; }
+    .bar  { display: none; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- 화면에서만 보입니다 (인쇄하면 안 나옵니다) -->
+  <div class="bar">
+    <span>A4 (210 × 297mm) · 인쇄하거나 PDF로 저장하세요</span>
+    <button onclick="window.print()">인쇄하기 / PDF 저장</button>
+  </div>
+
+  <!-- ===================== 종이 한 장 ===================== -->
+  <div class="page">
+
+    <!-- 1. 맨 위 상호 -->
+    <div class="top">
+      <div>
+        <p class="name">현진실업</p>
+        <p class="tag">승무원 모집</p>
+      </div>
+      <div class="right">
+        <b>임시 · 가맹(캡시, 트루) · 카카오 벤티</b>
+        초보 환영 · 당일 면접 가능<br>
+        이력서 없이 오셔도 됩니다
+      </div>
+    </div>
+
+    <!-- 2. 큰 제목 -->
+    <div class="hero">
+      <div class="pic"></div>
+      <div class="veil"></div>
+      <div class="txt">
+        <p class="kicker">HYUNJIN DRIVER RECRUIT</p>
+        <h2>승무원 대모집</h2>
+        <p class="sub">면허만 있으시면 됩니다. 나머지는 저희가 도와드립니다.</p>
+        <div class="chips">
+          <span>임시</span>
+          <span>가맹 · 캡시</span>
+          <span>가맹 · 트루</span>
+          <span>카카오 벤티</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 모집 부문 -->
+    <div class="jobs">
+      <div class="sec-t">
+        <p class="k">RECRUIT</p>
+        <h3>모집 부문</h3>
+        <hr class="line">
+      </div>
+
+      <div class="cards">
+
+        <div class="job">
+          <span class="t">임시</span>
+          <h4>임시 승무원</h4>
+          <p>원하시는 날짜만<br>골라서 근무<br>부업으로 적합</p>
+        </div>
+
+        <div class="job">
+          <span class="t">가맹</span>
+          <h4>가맹 · 캡시</h4>
+          <p>가맹 호출 운행<br>배차가 꾸준해<br>수입이 안정적</p>
+        </div>
+
+        <div class="job">
+          <span class="t">가맹</span>
+          <h4>가맹 · 트루</h4>
+          <p>정해진 구역 위주<br>길 익히기 수월<br>주간 / 야간</p>
+        </div>
+
+        <div class="job">
+          <span class="t">대형</span>
+          <h4>카카오 벤티</h4>
+          <p>대형 승합 호출<br>단가가 높아<br>운행 부담 적음</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 4. 자격 / 회사 지원 -->
+    <div class="two">
+
+      <div class="box">
+        <p class="k">QUALIFICATION</p>
+        <h4>지원 자격</h4>
+        <ul>
+          <li><b>1종 보통 운전면허</b> 이상 소지</li>
+          <li>운전 경력 <b>1년 이상</b></li>
+          <li><b>택시운전자격증</b> 소지<br>(없으셔도 지원 가능합니다)</li>
+          <li>건강 상태에 이상이 없으신 분</li>
+        </ul>
+      </div>
+
+      <div class="box dark">
+        <p class="k">WE SUPPORT</p>
+        <h4>회사가 도와드립니다</h4>
+        <ul>
+          <li><b>회사 차량 제공</b> — 차량 구입 부담 없음</li>
+          <li><b>택시운전자격증</b> 취득 과정 지원</li>
+          <li><b>운행 교육</b> — 배차 앱, 정산, 운행 요령</li>
+          <li>근무 형태 상담 후 결정 가능</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 5. 이런 분 환영 -->
+    <div class="welcome">
+      <div class="lb">
+        이런 분 환영
+        <small>WELCOME</small>
+      </div>
+      <ul>
+        <li>처음 시작하시는 분</li>
+        <li>시간을 정해 일하고 싶은 분</li>
+        <li>오래 함께하실 분</li>
+      </ul>
+    </div>
+
+    <!-- 6. 지원 방법 -->
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <h5>전화 주세요</h5>
+        <p>이력서는 없으셔도<br>괜찮습니다</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h5>방문 면접</h5>
+        <p>신분증과 운전면허증만<br>가져오시면 됩니다</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h5>교육 후 운행</h5>
+        <p>차량과 배차를<br>배정해 드립니다</p>
+      </div>
+    </div>
+
+    <!-- 7. 맨 아래 전화 -->
+    <div class="cta">
+      <div class="head">
+        <div class="call">
+          <p class="k">채용 문의 · 면접 예약</p>
+          <p class="num">1588-0000</p>
+          <p class="hrs">급여와 근무 조건은 면접 때 상세히 안내해 드립니다.</p>
+        </div>
+        <div class="now">
+          <p class="t">지금 바로</p>
+          <p class="v">당일 면접<br>가능</p>
+          <p class="s">전화 주시면 일정을 잡아드립니다</p>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div>
+          <b>현진실업</b><br>
+          임시 · 가맹(캡시, 트루) · 카카오 벤티 승무원 대모집<br>
+          근무지: 현진실업 차고지
+        </div>
+        <div class="web">
+          <span class="site">a87918253-gif.github.io/ianae-shop/taxi.html</span>
+          모집 안내와 지원서는 위 주소에서
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
