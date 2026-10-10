@@ -102,7 +102,7 @@
   .banner .btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
   /* ===== 2. 모집 부문 ===== */
-  .jobs { background: var(--cream); padding: 92px 0 96px 0; }
+  .jobs { background: rgba(250,247,241,0.72); padding: 92px 0 96px 0; }
   .jobs .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 
   .job {
@@ -130,6 +130,8 @@
   }
   .job h3 { font-size: 20px; margin: 0 0 10px 0; line-height: 1.4; }
   .job .d { font-size: 14.5px; color: #8b9184; margin: 0 0 18px 0; line-height: 1.8; }
+  /* 꼭 알려드릴 내용은 진하게 */
+  .job .d b { color: var(--olive); font-weight: 700; }
 
   .job ul { list-style: none; margin: 0 0 20px 0; padding: 0; }
   .job li {
@@ -161,7 +163,7 @@
   .job .apply:hover { background: var(--olive); }
 
   /* ===== 3. 지원 자격 ===== */
-  .need { background: #fff; padding: 92px 0; }
+  .need { background: rgba(255,255,255,0.78); padding: 92px 0; }
   .need .cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -204,7 +206,7 @@
   .need .box li b { color: var(--ink); font-weight: 600; }
 
   /* ===== 4. 근무 조건 표 ===== */
-  .terms { background: var(--cream-2); padding: 92px 0 96px 0; }
+  .terms { background: rgba(243,236,225,0.74); padding: 92px 0 96px 0; }
   .terms .inner { max-width: 820px; margin: 0 auto; }
   .terms table {
     width: 100%;
@@ -287,7 +289,7 @@
   .who .item b { color: var(--gold-soft); font-weight: 700; }
 
   /* ===== 6. 지원 방법 ===== */
-  .how { background: var(--cream); padding: 92px 0 96px 0; }
+  .how { background: rgba(250,247,241,0.72); padding: 92px 0 96px 0; }
   .how .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -368,7 +370,7 @@
   }
 
   /* ===== 7. 자주 묻는 질문 ===== */
-  .faq { background: #fff; padding: 92px 0 100px 0; }
+  .faq { background: rgba(255,255,255,0.78); padding: 92px 0 100px 0; }
   .faq .list { max-width: 820px; margin: 0 auto; }
   .faq .qa { border-bottom: 1px solid var(--line); }
   .faq .qa button {
@@ -461,7 +463,6 @@
     <a href="#need">지원 자격</a>
     <a href="#terms">근무 조건</a>
     <a href="#how">지원 방법</a>
-    <a href="index.html">바닥재 쇼핑몰</a>
     <a href="blog.html">블로그</a>
   </nav>
 
@@ -501,11 +502,12 @@
         <div class="job">
           <span class="tag">임시</span>
           <h3>임시 승무원</h3>
-          <p class="d">원하시는 날짜만 골라서 근무하십니다. 부업으로 시작하시기 좋습니다.</p>
+          <p class="d"><b>3개월 기간 동안 운전면허증만으로 근무 가능합니다.</b>
+             택시운전자격증은 그 사이에 준비하시면 됩니다.</p>
           <ul>
-            <li><span>근무 형태</span><b>일 단위 선택</b></li>
+            <li><span>필요 서류</span><b>운전면허증</b></li>
+            <li><span>근무 기간</span><b>3개월</b></li>
             <li><span>차량</span><b>회사 차량 제공</b></li>
-            <li><span>경력</span><b>무관 · 초보 환영</b></li>
           </ul>
           <button class="apply" onclick="pick('임시 승무원')">이 부문 지원</button>
         </div>
@@ -568,7 +570,10 @@
           <h3>꼭 필요합니다</h3>
           <ul>
             <li><b>1종 보통 운전면허</b> 이상 소지</li>
-            <li><b>택시운전자격증</b> 소지<br>(없으시면 취득을 도와드립니다)</li>
+            <li><b>택시운전자격증</b> 소지<br>
+                (없으시면 취득을 도와드립니다.<br>
+                <b>임시 승무원</b>은 운전면허증만으로<br>
+                <b>3개월간 근무</b>하실 수 있습니다)</li>
             <li>운전 경력 <b>1년 이상</b></li>
             <li>건강 상태에 이상이 없으신 분</li>
           </ul>
@@ -745,8 +750,9 @@
         <div class="qa">
           <button onclick="toggleFaq(this)">택시운전자격증이 없어도 지원할 수 있나요?</button>
           <div class="ans">
-            지원하실 수 있습니다. 1종 보통 이상 운전면허와 운전 경력 요건을 갖추셨다면,
-            <b>택시운전자격증 취득 과정을 저희가 도와드립니다.</b>
+            지원하실 수 있습니다. <b>임시 승무원</b>으로 지원하시면
+            <b>운전면허증만으로 3개월 동안 근무</b>하실 수 있습니다.
+            자격증은 그 3개월 사이에 준비하시면 되고, 취득 과정은 저희가 도와드립니다.
             시험 일정과 준비 방법을 안내해 드리니 먼저 전화 주세요.
           </div>
         </div>
